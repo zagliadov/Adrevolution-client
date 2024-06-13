@@ -1,0 +1,601 @@
+openapi: 3.0.0
+paths:
+  /:
+    get:
+      operationId: AppController_getHello
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelloWorldDto'
+  /company:
+    get:
+      operationId: CompanyController_getCompany
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyDto'
+    patch:
+      operationId: CompanyController_patchCompany
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyDto'
+  /company/get-users-of-company:
+    get:
+      operationId: CompanyController_getUsersOfCompany
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyDto'
+  /company-details:
+    get:
+      operationId: CompanyDetailsController_getCompanyDetails
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyDetailsDto'
+    patch:
+      operationId: CompanyDetailsController_patchCompanyDetails
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyDetailsDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyDetailsDto'
+  /business-hours:
+    get:
+      operationId: BusinessHoursController_getBusinessHours
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessHoursDto'
+    patch:
+      operationId: BusinessHoursController_patchBusinessHours
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BusinessHoursDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessHoursDto'
+  /permissions:
+    get:
+      operationId: PermissionsController_getPermission
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionDto'
+  /labour-cost/{userId}:
+    patch:
+      operationId: LabourCostController_update
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLabourCostDto'
+      responses:
+        '200':
+          description: ''
+    get:
+      operationId: LabourCostController_findByUserId
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabourCostDto'
+    delete:
+      operationId: LabourCostController_delete
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+  /communications:
+    get:
+      operationId: CommunicationsController_getCommunications
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunicationDto'
+    patch:
+      operationId: CommunicationsController_updateCommunications
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCommunicationDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunicationDto'
+  /auth/sign-up:
+    post:
+      operationId: AuthController_signUp
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpBodyDto'
+      responses:
+        '201':
+          description: ''
+  /auth/sign-in:
+    post:
+      operationId: AuthController_signIn
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInBodyDto'
+      responses:
+        '200':
+          description: ''
+  /auth/sign-out:
+    post:
+      operationId: AuthController_signOut
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /auth/session:
+    get:
+      operationId: AuthController_getSessionInfo
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSessionInfoDto'
+  /users:
+    get:
+      operationId: UsersController_getUserDetails
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+    patch:
+      operationId: UsersController_patchUser
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchUserDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatchUserDto'
+  /users/get-user-by-id/{userId}:
+    get:
+      operationId: UsersController_getUserById
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+  /users/create-new-user-without-password:
+    post:
+      operationId: UsersController_createUserWithoutPassword
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserWithoutPassword'
+      responses:
+        '200':
+          description: ''
+  /account:
+    get:
+      operationId: AccountController_getAccount
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountDto'
+    patch:
+      operationId: AccountController_patchAccount
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchAccountDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountDto'
+info:
+  title: Transport company
+  description: ''
+  version: 1.0.0
+  contact: {}
+tags: []
+servers: []
+components:
+  schemas:
+    HelloWorldDto:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    CompanyDto:
+      type: object
+      properties:
+        id:
+          type: string
+        companyName:
+          type: string
+        phoneNumber:
+          type: string
+        websiteURL:
+          type: string
+        companyEmail:
+          type: string
+        street1:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        postCode:
+          type: string
+        businessHoursId:
+          type: string
+        ownerId:
+          type: string
+        country:
+          type: string
+        timezone:
+          type: string
+        dateFormat:
+          type: string
+        timeFormat:
+          type: string
+        firstDayOfWeek:
+          type: string
+      required:
+        - id
+        - country
+        - timezone
+        - dateFormat
+        - timeFormat
+        - firstDayOfWeek
+    CompanyDetailsDto:
+      type: object
+      properties:
+        teamSize:
+          type: string
+        estimatedAnnualRevenue:
+          type: string
+        topPriority:
+          type: string
+        industry:
+          type: string
+        heardAboutUs:
+          type: string
+        displayBusinessHours:
+          type: boolean
+    BusinessHoursDto:
+      type: object
+      properties:
+        monday:
+          type: string
+        tuesday:
+          type: string
+        wednesday:
+          type: string
+        thursday:
+          type: string
+        friday:
+          type: string
+        saturday:
+          type: string
+        sunday:
+          type: string
+      required:
+        - monday
+        - tuesday
+        - wednesday
+        - thursday
+        - friday
+        - saturday
+        - sunday
+    PermissionDto:
+      type: object
+      properties:
+        isOwner:
+          type: boolean
+        isAdmin:
+          type: boolean
+        level:
+          type: string
+      required:
+        - isOwner
+        - isAdmin
+        - level
+    UpdateLabourCostDto:
+      type: object
+      properties: {}
+    LabourCostDto:
+      type: object
+      properties: {}
+    CommunicationDto:
+      type: object
+      properties: {}
+    UpdateCommunicationDto:
+      type: object
+      properties: {}
+    SignUpBodyDto:
+      type: object
+      properties:
+        email:
+          type: string
+          example: test@gmail.com
+        password:
+          type: string
+          example: test
+      required:
+        - email
+        - password
+    SignInBodyDto:
+      type: object
+      properties:
+        email:
+          type: string
+          example: test@gmail.com
+        password:
+          type: string
+          example: test
+      required:
+        - email
+        - password
+    GetSessionInfoDto:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        iat:
+          type: number
+        exp:
+          type: number
+      required:
+        - id
+        - email
+        - iat
+        - exp
+    UserDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: clxa2aljj0000ophlkrpc1gki
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        lastLogin:
+          type: string
+          format: date-time
+        streetAddress:
+          type: string
+        city:
+          type: string
+        province:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+        phoneNumber:
+          type: string
+      required:
+        - id
+        - email
+        - firstName
+        - lastName
+        - lastLogin
+        - streetAddress
+        - city
+        - province
+        - postalCode
+        - country
+        - phoneNumber
+    UserWithoutPassword:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        streetAddress:
+          type: string
+        city:
+          type: string
+        province:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+        phoneNumber:
+          type: string
+        companyId:
+          type: string
+      required:
+        - id
+        - email
+        - firstName
+        - lastName
+        - streetAddress
+        - city
+        - province
+        - postalCode
+        - country
+        - phoneNumber
+        - companyId
+    PatchUserDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        streetAddress:
+          type: string
+        city:
+          type: string
+        province:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+        phoneNumber:
+          type: string
+      required:
+        - firstName
+        - lastName
+        - streetAddress
+        - city
+        - province
+        - postalCode
+        - country
+        - phoneNumber
+    AccountDto:
+      type: object
+      properties:
+        id:
+          type: string
+        ownerId:
+          type: string
+        isBlockingEnabled:
+          type: boolean
+      required:
+        - id
+        - ownerId
+        - isBlockingEnabled
+    PatchAccountDto:
+      type: object
+      properties:
+        isBlockingEnabled:
+          type: boolean
+      required:
+        - isBlockingEnabled
