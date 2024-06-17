@@ -80,3 +80,28 @@ export interface IBusinessData {
   [IFormField.TEAM_SIZE]: string;
   [IFormField.ESTIMATED_ANNUAL_REVENUE]: string;
 }
+
+export interface CalendarResource {
+  id: string;
+  name: string;
+  eventColor: string;
+}
+
+export interface CalendarEvent {
+  id: string;
+  startDate: string;
+  endDate: string;
+  name: string;
+  resourceId: string;
+  eventColor?: string;
+}
+
+export interface CalendarData {
+  success: boolean;
+  resources: {
+    rows: CalendarResource[];
+  };
+  events: {
+    rows: CalendarEvent[];
+  };
+}

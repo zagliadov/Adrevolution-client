@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "@bryntum/calendar/calendar.stockholm.css";
+/* @import '@bryntum/calendar/calendar.classic-dark.css'; */
+
 * {
   scroll-behavior: smooth;
   box-sizing: border-box;
