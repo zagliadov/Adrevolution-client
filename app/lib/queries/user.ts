@@ -1,4 +1,9 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
+
+import { useForm } from "react-hook-form";
+import _ from "lodash";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "../constants/routes";
 import {
   UserDto,
   usersControllerCreateUserWithoutPassword,
@@ -6,10 +11,6 @@ import {
   usersControllerGetUserDetails,
   usersControllerPatchUser,
 } from "../api/generated";
-import { useForm } from "react-hook-form";
-import _ from "lodash";
-import { useRouter } from "next/navigation";
-import { ROUTES } from "../constants/routes";
 
 const userKey = ["user"];
 const userByIdKey = ["userById"];

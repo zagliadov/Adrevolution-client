@@ -23,11 +23,10 @@ type Params = {
   };
 };
 export default function UserId({ params }: Params) {
-  const { data: userPermission, isSuccess: userPermissionIsSuccess } = useGetPermission();
+  const { data: userPermission, isSuccess: userPermissionIsSuccess } =
+    useGetPermission();
   const { data: userById } = useGetUserById(params.userId);
-  const { register, setValue, handleSubmit, isPending } =
-    useUserUpdate();
-
+  const { register, setValue, handleSubmit, isPending } = useUserUpdate();
   useEffect(() => {
     if (userById) {
       if (userById) {
@@ -57,7 +56,7 @@ export default function UserId({ params }: Params) {
 
   const handleUpdateData = (data: any) => {
     console.log(data);
-  }
+  };
   return (
     <div className="px-4 space-y-4">
       <div className="flex items-center justify-between">
@@ -195,7 +194,7 @@ export default function UserId({ params }: Params) {
             </div>
           </div>
         </div>
-  
+
         <ChangePasswordModal />
         <LabourCost userId={userId} />
         <div className="divider"></div>
@@ -204,7 +203,10 @@ export default function UserId({ params }: Params) {
           description={`Availability is only applied to online booking, currently. Set team member's availability so that they are only bookable when they are available.`}
         />
         <div className="divider"></div>
-        <Permissions userPermission={userPermission} userPermissionIsSuccess={userPermissionIsSuccess} />
+        <Permissions
+          userPermission={userPermission}
+          userPermissionIsSuccess={userPermissionIsSuccess}
+        />
         <div className="divider"></div>
         <Communications />
         <div className="divider"></div>

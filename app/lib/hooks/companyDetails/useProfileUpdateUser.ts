@@ -1,12 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { ROUTES } from "../../constants/routes";
 import {
-  usersControllerPatchUser,
   companyControllerPatchCompany,
   companyDetailsControllerPatchCompanyDetails,
+  usersControllerPatchUser,
 } from "../../api/generated";
-import { ROUTES } from "../../constants/routes";
+import { IFormField } from "../../definitions";
 
 /**
  * Custom hook to handle user and company updates.
@@ -57,16 +58,30 @@ export const useProfileUpdateUser = () => {
    *
    * @param {object} data - The form data containing user and company fields.
    */
-  const handleFormSubmit = (data: any) => {
-    const { firstName, lastName, phoneNumber, industry } = data;
+  const handleFormSubmit = ({
+    firstName,
+    lastName,
+    phoneNumber,
+    industry,
+  }: {
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    industry: string;
+  }) => {
+    // const { firstName, lastName, phoneNumber, industry } = data;
 
     userMutation.mutate(
       { firstName, lastName },
       {
         onSuccess: () => {
           // Mutates company data after successful user update
-          companyModelMutation.mutate({ phoneNumber });
-          companyDetailsModelMutation.mutate({ industry });
+          companyModelMutation.mutate({
+            phoneNumber,
+          });
+          companyDetailsModelMutation.mutate({
+            industry,
+          });
         },
       }
     );

@@ -1,11 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import {
-  communicationsControllerGetCommunications,
-  communicationsControllerUpdateCommunications,
-  UpdateCommunicationDto,
-} from "../api/generated";
 import { useForm } from "react-hook-form";
 import _ from "lodash";
+import { communicationsControllerGetCommunications, communicationsControllerUpdateCommunications, UpdateCommunicationDto } from "../api/generated";
 
 const communicationsKey = ["communications"];
 

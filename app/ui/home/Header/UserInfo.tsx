@@ -9,7 +9,7 @@ export const UserInfo: FC = () => {
 
   return (
     <>
-      <div className="menu-title flex items-center justify-between">
+      <div className="menu-title flex items-center justify-between gap-4">
         <div className="w-10 h-10 rounded-full avatar">
           <Image
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

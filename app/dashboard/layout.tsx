@@ -10,7 +10,6 @@ import { Spinner } from "../ui/spinner";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { data, isPending } = useGetCompany();
-
   return (
     <div className="flex min-h-screen flex-row">
       {isPending ? (

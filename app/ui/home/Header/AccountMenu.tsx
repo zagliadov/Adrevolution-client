@@ -19,7 +19,7 @@ export const AccountMenu: FC<IProps> = ({ dashboardSettingsLinks }) => {
       </div>
       <ul
         tabIndex={0}
-        className="dropdown-content z-[1] menu shadow bg-base-100 rounded-box w-52"
+        className="dropdown-content z-[1] menu shadow bg-base-100 rounded-box w-auto"
       >
         <li>
           <UserInfo />

@@ -194,18 +194,3 @@ export default function NewUser() {
     </div>
   );
 }
-
-// const handleCreateNewUser = (data: any) => {
-//   const {
-//     labourCost,
-//     costUnit,
-//     //
-//     surveys,
-//     //
-//     isAdmin,
-//     permissionLevel,
-//     ...other
-//   } = data;
-
-//   console.log(data);
-// };

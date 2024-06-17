@@ -1,94 +1,234 @@
 openapi: 3.0.0
 paths:
-  /:
-    get:
-      operationId: AppController_getHello
+  /company:
+    post:
+      operationId: CompanyController_createCompany
+      summary: Create a new company
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Successfully created company.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HelloWorldDto'
-  /company:
+                $ref: '#/components/schemas/CompanyDto'
+      tags:
+        - Company
     get:
       operationId: CompanyController_getCompany
+      summary: Get company details
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Successfully retrieved company details.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CompanyDto'
-    patch:
-      operationId: CompanyController_patchCompany
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CompanyDto'
+        '404':
+          description: Company not found
+      tags:
+        - Company
+  /company/get-users-of-company/{companyId}:
+    get:
+      operationId: CompanyController_getUsersOfCompanyById
+      summary: Get users of company by company id
+      parameters:
+        - name: companyId
+          required: true
+          in: path
+          schema:
+            type: string
       responses:
         '200':
-          description: ''
+          description: Successfully retrieved users of company by company id.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CompanyDto'
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDto'
+        '404':
+          description: Company or users not found
+      tags:
+        - Company
   /company/get-users-of-company:
     get:
       operationId: CompanyController_getUsersOfCompany
+      summary: Get users of company
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Successfully retrieved users of company.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CompanyDto'
-  /company-details:
-    get:
-      operationId: CompanyDetailsController_getCompanyDetails
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CompanyDetailsDto'
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDto'
+        '404':
+          description: Company not found
+      tags:
+        - Company
+  /company/patch-company:
     patch:
-      operationId: CompanyDetailsController_patchCompanyDetails
+      operationId: CompanyController_patchCompany
+      summary: Update company details
       parameters: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CompanyDetailsDto'
+              $ref: '#/components/schemas/PatchCompanyDto'
       responses:
         '200':
-          description: ''
+          description: Successfully patched company.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyDto'
+        '400':
+          description: Invalid input
+      tags:
+        - Company
+  /company/add-user-to-company/{companyId}/{userId}:
+    patch:
+      operationId: CompanyController_addUserToCompany
+      summary: Add user to company
+      parameters:
+        - name: companyId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully added user to company.
+      tags:
+        - Company
+  /company/connect-company-details/{companyId}/{companyDetailsId}:
+    patch:
+      operationId: CompanyController_connectCompanyDetailsToCompany
+      summary: Connect company details to company
+      parameters:
+        - name: companyId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: companyDetailsId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully connected company details to company.
+      tags:
+        - Company
+  /company/get-company-by-id/{companyId}:
+    get:
+      operationId: CompanyController_getCompanyById
+      summary: Get company by ID
+      parameters:
+        - name: companyId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved company by ID.
+        '404':
+          description: Company or users not found
+      tags:
+        - Company
+  /company-details:
+    post:
+      operationId: CompanyDetailsController_createCompanyDetails
+      summary: Create new company details
+      parameters: []
+      responses:
+        '200':
+          description: Successfully created company details.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CompanyDetailsDto'
-  /business-hours:
+        '409':
+          description: Company details already exist for this user
+      tags:
+        - Company Details
+  /company-details/get:
     get:
-      operationId: BusinessHoursController_getBusinessHours
+      operationId: CompanyDetailsController_getCompanyDetails
+      summary: Get company details
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Successfully retrieved company details.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BusinessHoursDto'
+                $ref: '#/components/schemas/CompanyDetailsDto'
+        '404':
+          description: Company details not found
+      tags:
+        - Company Details
+  /company-details/patch:
     patch:
-      operationId: BusinessHoursController_patchBusinessHours
+      operationId: CompanyDetailsController_patchCompanyDetails
+      summary: Update company details
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchCompanyDetailsDto'
+      responses:
+        '200':
+          description: Successfully updated company details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyDetailsDto'
+        '400':
+          description: Invalid input
+      tags:
+        - Company Details
+  /company-details/industry/{companyId}:
+    get:
+      operationId: CompanyDetailsController_getIndustryByCompanyId
+      summary: Get industry by company ID
+      parameters:
+        - name: companyId
+          required: true
+          in: path
+          description: ID of the company
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved industry by company ID.
+          content:
+            application/json:
+              schema:
+                type: string
+        '404':
+          description: Company not found
+      tags:
+        - Company Details
+  /business-hours:
+    post:
+      operationId: BusinessHoursController_createBusinessHours
+      summary: Create business hours
       parameters: []
       requestBody:
         required: true
@@ -98,11 +238,51 @@ paths:
               $ref: '#/components/schemas/BusinessHoursDto'
       responses:
         '200':
-          description: ''
+          description: Successfully created business hours
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/BusinessHoursDto'
+        '400':
+          description: Invalid input
+      tags:
+        - Business hours
+    get:
+      operationId: BusinessHoursController_getBusinessHours
+      summary: Get business hours
+      parameters: []
+      responses:
+        '200':
+          description: Successfully retrieved business hours
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessHoursDto'
+        '404':
+          description: Business hours not found
+      tags:
+        - Business hours
+    patch:
+      operationId: BusinessHoursController_patchBusinessHours
+      summary: Update business hours
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchBusinessHoursDto'
+      responses:
+        '200':
+          description: Successfully updated business hours
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessHoursDto'
+        '400':
+          description: Invalid input
+      tags:
+        - Business hours
   /permissions:
     get:
       operationId: PermissionsController_getPermission
@@ -229,19 +409,70 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetSessionInfoDto'
-  /users:
-    get:
-      operationId: UsersController_getUserDetails
-      parameters: []
+  /auth/verify/{token}:
+    patch:
+      operationId: AuthController_verifyUserAndSetPassword
+      parameters:
+        - name: token
+          required: true
+          in: path
+          schema:
+            type: string
       responses:
         '200':
           description: ''
+  /auth/user/{token}:
+    get:
+      operationId: AuthController_getUserByToken
+      parameters:
+        - name: token
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+  /users/find-by-email:
+    get:
+      operationId: UsersController_findByEmail
+      summary: Find user by email
+      parameters:
+        - name: email
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully found user by email.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSecretDto'
+        '404':
+          description: User not found
+      tags:
+        - Users
+  /users:
+    get:
+      operationId: UsersController_getUserDetails
+      summary: Get user details
+      parameters: []
+      responses:
+        '200':
+          description: Successfully retrieved user details.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserDto'
+        '404':
+          description: User not found
+      tags:
+        - Users
     patch:
       operationId: UsersController_patchUser
+      summary: Update user
       parameters: []
       requestBody:
         required: true
@@ -251,14 +482,17 @@ paths:
               $ref: '#/components/schemas/PatchUserDto'
       responses:
         '200':
-          description: ''
+          description: Successfully updated user.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PatchUserDto'
+      tags:
+        - Users
   /users/get-user-by-id/{userId}:
     get:
       operationId: UsersController_getUserById
+      summary: Get user by ID
       parameters:
         - name: userId
           required: true
@@ -267,14 +501,19 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Successfully retrieved user by ID.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserDto'
+        '404':
+          description: User not found
+      tags:
+        - Users
   /users/create-new-user-without-password:
     post:
       operationId: UsersController_createUserWithoutPassword
+      summary: Create new user without password
       parameters: []
       requestBody:
         required: true
@@ -284,20 +523,80 @@ paths:
               $ref: '#/components/schemas/UserWithoutPassword'
       responses:
         '200':
-          description: ''
-  /account:
+          description: Successfully created new user without password.
+      tags:
+        - Users
+  /users/find-verification-token/{token}:
     get:
-      operationId: AccountController_getAccount
-      parameters: []
+      operationId: UsersController_findVerificationToken
+      summary: Find verification token
+      parameters:
+        - name: token
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully found verification token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerificationTokenDto'
+        '404':
+          description: Verification token not found
+      tags:
+        - Users
+  /users/update-password/{userId}:
+    patch:
+      operationId: UsersController_updateUserPassword
+      summary: Update user password
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully updated user password.
+        '404':
+          description: User not found
+      tags:
+        - Users
+  /users/{userId}:
+    delete:
+      operationId: UsersController_deleteUser
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
       responses:
         '200':
           description: ''
+      tags:
+        - Users
+  /account:
+    get:
+      operationId: AccountController_getAccount
+      summary: Get account details
+      parameters: []
+      responses:
+        '200':
+          description: Successfully retrieved account details.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountDto'
+        '404':
+          description: Account not found
+      tags:
+        - Account
     patch:
       operationId: AccountController_patchAccount
+      summary: Update account details
       parameters: []
       requestBody:
         required: true
@@ -307,11 +606,15 @@ paths:
               $ref: '#/components/schemas/PatchAccountDto'
       responses:
         '200':
-          description: ''
+          description: Successfully updated account details.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountDto'
+        '400':
+          description: Invalid input
+      tags:
+        - Account
 info:
   title: Transport company
   description: ''
@@ -321,13 +624,6 @@ tags: []
 servers: []
 components:
   schemas:
-    HelloWorldDto:
-      type: object
-      properties:
-        message:
-          type: string
-      required:
-        - message
     CompanyDto:
       type: object
       properties:
@@ -363,45 +659,154 @@ components:
           type: string
         firstDayOfWeek:
           type: string
+        displayBusinessHours:
+          type: boolean
+          nullable: true
       required:
         - id
-        - country
-        - timezone
-        - dateFormat
-        - timeFormat
-        - firstDayOfWeek
+    UserDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: clxa2aljj0000ophlkrpc1gki
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        lastLogin:
+          type: string
+          format: date-time
+        streetAddress:
+          type: string
+        city:
+          type: string
+        province:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+        phoneNumber:
+          type: string
+        companyId:
+          type: string
+      required:
+        - id
+    PatchCompanyDto:
+      type: object
+      properties:
+        companyName:
+          type: string
+          example: NewCompany2
+        phoneNumber:
+          type: string
+          example: '+1234567890'
+        websiteURL:
+          type: string
+          example: https://example.com
+        companyEmail:
+          type: string
+          example: company@example.com
+        street1:
+          type: string
+          example: 123 Main St
+        city:
+          type: string
+          example: Anytown
+        state:
+          type: string
+          example: Anystate
+        postCode:
+          type: string
+          example: 69006D
+        country:
+          type: string
+          example: USA
+        timezone:
+          type: string
+          example: America/New_York
+        dateFormat:
+          type: string
+          example: MM/DD/YYYY
+        timeFormat:
+          type: string
+          example: HH:mm
+        firstDayOfWeek:
+          type: string
+          example: Monday
     CompanyDetailsDto:
+      type: object
+      properties:
+        id:
+          type: string
+        teamSize:
+          type: string
+          example: 2-3 people
+        estimatedAnnualRevenue:
+          type: string
+          example: $0 - $50.000
+        topPriority:
+          type: string
+          example: Win more work
+        industry:
+          type: string
+          example: Home Theater
+        heardAboutUs:
+          type: string
+          example: ChatGPT
+        displayBusinessHours:
+          type: string
+          example: false
+      required:
+        - id
+    PatchCompanyDetailsDto:
       type: object
       properties:
         teamSize:
           type: string
+          example: 2-3 people
         estimatedAnnualRevenue:
           type: string
+          example: $0 - $50.000
         topPriority:
           type: string
+          example: Win more work
         industry:
           type: string
+          example: Home Theater
         heardAboutUs:
           type: string
+          example: ChatGPT
         displayBusinessHours:
-          type: boolean
+          type: string
+          example: false
     BusinessHoursDto:
       type: object
       properties:
         monday:
           type: string
+          example: '{"start": "09:00", "end": "17:00", "enabled": true}'
         tuesday:
           type: string
+          example: '{"start": "09:00", "end": "17:00", "enabled": true}'
         wednesday:
           type: string
+          example: '{"start": "09:00", "end": "17:00", "enabled": true}'
         thursday:
           type: string
+          example: '{"start": "09:00", "end": "17:00", "enabled": true}'
         friday:
           type: string
+          example: '{"start": "09:00", "end": "17:00", "enabled": true}'
         saturday:
           type: string
+          example: '{"start": "09:00", "end": "17:00", "enabled": false}'
         sunday:
           type: string
+          example: '{"start": "09:00", "end": "17:00", "enabled": false}'
       required:
         - monday
         - tuesday
@@ -410,6 +815,30 @@ components:
         - friday
         - saturday
         - sunday
+    PatchBusinessHoursDto:
+      type: object
+      properties:
+        monday:
+          type: string
+          example: '{"start": "09:00", "end": "17:00", "enabled": true}'
+        tuesday:
+          type: string
+          example: '{"start": "09:00", "end": "17:00", "enabled": true}'
+        wednesday:
+          type: string
+          example: '{"start": "09:00", "end": "17:00", "enabled": true}'
+        thursday:
+          type: string
+          example: '{"start": "09:00", "end": "17:00", "enabled": true}'
+        friday:
+          type: string
+          example: '{"start": "09:00", "end": "17:00", "enabled": true}'
+        saturday:
+          type: string
+          example: '{"start": "09:00", "end": "17:00", "enabled": false}'
+        sunday:
+          type: string
+          example: '{"start": "09:00", "end": "17:00", "enabled": false}'
     PermissionDto:
       type: object
       properties:
@@ -475,7 +904,7 @@ components:
         - email
         - iat
         - exp
-    UserDto:
+    UserSecretDto:
       type: object
       properties:
         id:
@@ -502,83 +931,131 @@ components:
           type: string
         phoneNumber:
           type: string
+        hash:
+          type: string
+        salt:
+          type: string
       required:
         - id
-        - email
-        - firstName
-        - lastName
-        - lastLogin
-        - streetAddress
-        - city
-        - province
-        - postalCode
-        - country
-        - phoneNumber
     UserWithoutPassword:
       type: object
       properties:
         id:
           type: string
+          example: clxa2aljj0000ophlkrpc1gki
         email:
           type: string
+          example: a.a.t.a.trade@gmail.com
         firstName:
           type: string
+          example: John
         lastName:
           type: string
+          example: Doe
         streetAddress:
           type: string
+          example: 123 Main St
         city:
           type: string
+          example: JohnCity
         province:
           type: string
+          example: JohnProvince
         postalCode:
           type: string
+          example: 67008T
         country:
           type: string
+          example: USA
         phoneNumber:
           type: string
+          example: '+1234567890'
         companyId:
           type: string
+          example: clxean62l000487898922wqk5
+        labourCost:
+          type: number
+          example: 20
+        costUnit:
+          type: string
+          enum:
+            - PER_HOUR
+            - PER_MONTH
+          example: PER_HOUR
+        surveys:
+          type: boolean
+          example: true
+        isAdmin:
+          type: boolean
+          example: false
+        permissionLevel:
+          type: string
+          enum:
+            - COMPANY_OWNER
+            - LIMITED_WORKER
+            - WORKER
+            - DISPATCHER
+            - MANAGER
+            - CUSTOM
+          example: WORKER
+        inviterFirstName:
+          type: string
+          example: Daniil
+        inviterLastName:
+          type: string
+          example: Zahliadov
       required:
         - id
         - email
         - firstName
         - lastName
-        - streetAddress
-        - city
-        - province
-        - postalCode
-        - country
-        - phoneNumber
-        - companyId
     PatchUserDto:
       type: object
       properties:
         firstName:
           type: string
+          example: Daniil
         lastName:
           type: string
+          example: Zahliadov
         streetAddress:
           type: string
+          example: 123 Main St
         city:
           type: string
+          example: New York
         province:
           type: string
+          example: New Province
         postalCode:
           type: string
+          example: 69904E
         country:
           type: string
+          example: USA
         phoneNumber:
           type: string
+          example: '+1234567890'
+    VerificationTokenDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: clxa2aljj0000ophlkrpc1gki
+        token:
+          type: string
+          example: verification-token
+        userId:
+          type: string
+          example: clxa2aljj0000ophlkrpc1gki
+        createdAt:
+          type: string
+          format: date-time
       required:
-        - firstName
-        - lastName
-        - streetAddress
-        - city
-        - province
-        - postalCode
-        - country
-        - phoneNumber
+        - id
+        - token
+        - userId
+        - createdAt
     AccountDto:
       type: object
       properties:

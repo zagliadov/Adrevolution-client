@@ -4,8 +4,12 @@
  * Transport company
  * OpenAPI spec version: 1.0.0
  */
-import { createInstance } from './api-instance';
-import type { BodyType } from './api-instance';
+import { createInstance } from "./api-instance";
+import type { BodyType } from "./api-instance";
+export type UsersControllerFindByEmailParams = {
+  email: string;
+};
+
 export interface PatchAccountDto {
   isBlockingEnabled: boolean;
 }
@@ -16,43 +20,79 @@ export interface AccountDto {
   ownerId: string;
 }
 
-export interface PatchUserDto {
-  city: string;
-  country: string;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  postalCode: string;
-  province: string;
-  streetAddress: string;
+export interface VerificationTokenDto {
+  createdAt: string;
+  id: string;
+  token: string;
+  userId: string;
 }
+
+export interface PatchUserDto {
+  city?: string;
+  country?: string;
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: string;
+  postalCode?: string;
+  province?: string;
+  streetAddress?: string;
+}
+
+export type UserWithoutPasswordPermissionLevel =
+  (typeof UserWithoutPasswordPermissionLevel)[keyof typeof UserWithoutPasswordPermissionLevel];
+
+export const UserWithoutPasswordPermissionLevel = {
+  COMPANY_OWNER: "COMPANY_OWNER",
+  LIMITED_WORKER: "LIMITED_WORKER",
+  WORKER: "WORKER",
+  DISPATCHER: "DISPATCHER",
+  MANAGER: "MANAGER",
+  CUSTOM: "CUSTOM",
+} as const;
+
+export type UserWithoutPasswordCostUnit =
+  (typeof UserWithoutPasswordCostUnit)[keyof typeof UserWithoutPasswordCostUnit];
+
+export const UserWithoutPasswordCostUnit = {
+  PER_HOUR: "PER_HOUR",
+  PER_MONTH: "PER_MONTH",
+} as const;
 
 export interface UserWithoutPassword {
-  city: string;
-  companyId: string;
-  country: string;
+  city?: string;
+  companyId?: string;
+  costUnit?: UserWithoutPasswordCostUnit;
+  country?: string;
   email: string;
   firstName: string;
   id: string;
+  inviterFirstName?: string;
+  inviterLastName?: string;
+  isAdmin?: boolean;
+  labourCost?: number;
   lastName: string;
-  phoneNumber: string;
-  postalCode: string;
-  province: string;
-  streetAddress: string;
+  permissionLevel?: UserWithoutPasswordPermissionLevel;
+  phoneNumber?: string;
+  postalCode?: string;
+  province?: string;
+  streetAddress?: string;
+  surveys?: boolean;
 }
 
-export interface UserDto {
-  city: string;
-  country: string;
-  email: string;
-  firstName: string;
+export interface UserSecretDto {
+  city?: string;
+  country?: string;
+  email?: string;
+  firstName?: string;
+  hash?: string;
   id: string;
-  lastLogin: string;
-  lastName: string;
-  phoneNumber: string;
-  postalCode: string;
-  province: string;
-  streetAddress: string;
+  lastLogin?: string;
+  lastName?: string;
+  phoneNumber?: string;
+  postalCode?: string;
+  province?: string;
+  salt?: string;
+  streetAddress?: string;
 }
 
 export interface GetSessionInfoDto {
@@ -72,18 +112,36 @@ export interface SignUpBodyDto {
   password: string;
 }
 
-export interface UpdateCommunicationDto { [key: string]: any }
+export interface UpdateCommunicationDto {
+  [key: string]: any;
+}
 
-export interface CommunicationDto { [key: string]: any }
+export interface CommunicationDto {
+  [key: string]: any;
+}
 
-export interface LabourCostDto { [key: string]: any }
+export interface LabourCostDto {
+  [key: string]: any;
+}
 
-export interface UpdateLabourCostDto { [key: string]: any }
+export interface UpdateLabourCostDto {
+  [key: string]: any;
+}
 
 export interface PermissionDto {
   isAdmin: boolean;
   isOwner: boolean;
   level: string;
+}
+
+export interface PatchBusinessHoursDto {
+  friday?: string;
+  monday?: string;
+  saturday?: string;
+  sunday?: string;
+  thursday?: string;
+  tuesday?: string;
+  wednesday?: string;
 }
 
 export interface BusinessHoursDto {
@@ -96,8 +154,8 @@ export interface BusinessHoursDto {
   wednesday: string;
 }
 
-export interface CompanyDetailsDto {
-  displayBusinessHours?: boolean;
+export interface PatchCompanyDetailsDto {
+  displayBusinessHours?: string;
   estimatedAnnualRevenue?: string;
   heardAboutUs?: string;
   industry?: string;
@@ -105,293 +163,669 @@ export interface CompanyDetailsDto {
   topPriority?: string;
 }
 
+export interface CompanyDetailsDto {
+  displayBusinessHours?: string;
+  estimatedAnnualRevenue?: string;
+  heardAboutUs?: string;
+  id: string;
+  industry?: string;
+  teamSize?: string;
+  topPriority?: string;
+}
+
+export interface PatchCompanyDto {
+  city?: string;
+  companyEmail?: string;
+  companyName?: string;
+  country?: string;
+  dateFormat?: string;
+  firstDayOfWeek?: string;
+  phoneNumber?: string;
+  postCode?: string;
+  state?: string;
+  street1?: string;
+  timeFormat?: string;
+  timezone?: string;
+  websiteURL?: string;
+}
+
+export interface UserDto {
+  city?: string;
+  companyId?: string;
+  country?: string;
+  email?: string;
+  firstName?: string;
+  id: string;
+  lastLogin?: string;
+  lastName?: string;
+  phoneNumber?: string;
+  postalCode?: string;
+  province?: string;
+  streetAddress?: string;
+}
+
 export interface CompanyDto {
   businessHoursId?: string;
   city?: string;
   companyEmail?: string;
   companyName?: string;
-  country: string;
-  dateFormat: string;
-  firstDayOfWeek: string;
+  country?: string;
+  dateFormat?: string;
+  /** @nullable */
+  displayBusinessHours?: boolean | null;
+  firstDayOfWeek?: string;
   id: string;
   ownerId?: string;
   phoneNumber?: string;
   postCode?: string;
   state?: string;
   street1?: string;
-  timeFormat: string;
-  timezone: string;
+  timeFormat?: string;
+  timezone?: string;
   websiteURL?: string;
 }
 
-export interface HelloWorldDto {
-  message: string;
-}
-
-
-
-
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
 
+/**
+ * @summary Create a new company
+ */
+export const companyControllerCreateCompany = (
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<CompanyDto>(
+    { url: `/company`, method: "POST" },
+    options
+  );
+};
 
-  export const appControllerGetHello = (
-    
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<HelloWorldDto>(
-      {url: `/`, method: 'GET'
-    },
-      options);
-    }
-  
+/**
+ * @summary Get company details
+ */
 export const companyControllerGetCompany = (
-    
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<CompanyDto>(
-      {url: `/company`, method: 'GET'
-    },
-      options);
-    }
-  
-export const companyControllerPatchCompany = (
-    companyDto: BodyType<CompanyDto>,
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<CompanyDto>(
-      {url: `/company`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: companyDto
-    },
-      options);
-    }
-  
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<CompanyDto>(
+    { url: `/company`, method: "GET" },
+    options
+  );
+};
+
+/**
+ * @summary Get users of company by company id
+ */
+export const companyControllerGetUsersOfCompanyById = (
+  companyId: string,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<UserDto[]>(
+    { url: `/company/get-users-of-company/${companyId}`, method: "GET" },
+    options
+  );
+};
+
+/**
+ * @summary Get users of company
+ */
 export const companyControllerGetUsersOfCompany = (
-    
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<CompanyDto>(
-      {url: `/company/get-users-of-company`, method: 'GET'
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<UserDto[]>(
+    { url: `/company/get-users-of-company`, method: "GET" },
+    options
+  );
+};
+
+/**
+ * @summary Update company details
+ */
+export const companyControllerPatchCompany = (
+  patchCompanyDto: BodyType<PatchCompanyDto>,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<CompanyDto>(
+    {
+      url: `/company/patch-company`,
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      data: patchCompanyDto,
     },
-      options);
-    }
-  
+    options
+  );
+};
+
+/**
+ * @summary Add user to company
+ */
+export const companyControllerAddUserToCompany = (
+  companyId: string,
+  userId: string,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<void>(
+    {
+      url: `/company/add-user-to-company/${companyId}/${userId}`,
+      method: "PATCH",
+    },
+    options
+  );
+};
+
+/**
+ * @summary Connect company details to company
+ */
+export const companyControllerConnectCompanyDetailsToCompany = (
+  companyId: string,
+  companyDetailsId: string,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<void>(
+    {
+      url: `/company/connect-company-details/${companyId}/${companyDetailsId}`,
+      method: "PATCH",
+    },
+    options
+  );
+};
+
+/**
+ * @summary Get company by ID
+ */
+export const companyControllerGetCompanyById = (
+  companyId: string,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<void>(
+    { url: `/company/get-company-by-id/${companyId}`, method: "GET" },
+    options
+  );
+};
+
+/**
+ * @summary Create new company details
+ */
+export const companyDetailsControllerCreateCompanyDetails = (
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<CompanyDetailsDto>(
+    { url: `/company-details`, method: "POST" },
+    options
+  );
+};
+
+/**
+ * @summary Get company details
+ */
 export const companyDetailsControllerGetCompanyDetails = (
-    
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<CompanyDetailsDto>(
-      {url: `/company-details`, method: 'GET'
-    },
-      options);
-    }
-  
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<CompanyDetailsDto>(
+    { url: `/company-details/get`, method: "GET" },
+    options
+  );
+};
+
+/**
+ * @summary Update company details
+ */
 export const companyDetailsControllerPatchCompanyDetails = (
-    companyDetailsDto: BodyType<CompanyDetailsDto>,
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<CompanyDetailsDto>(
-      {url: `/company-details`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: companyDetailsDto
+  patchCompanyDetailsDto: BodyType<PatchCompanyDetailsDto>,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<CompanyDetailsDto>(
+    {
+      url: `/company-details/patch`,
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      data: patchCompanyDetailsDto,
     },
-      options);
-    }
-  
+    options
+  );
+};
+
+/**
+ * @summary Get industry by company ID
+ */
+export const companyDetailsControllerGetIndustryByCompanyId = (
+  companyId: string,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<string>(
+    { url: `/company-details/industry/${companyId}`, method: "GET" },
+    options
+  );
+};
+
+/**
+ * @summary Create business hours
+ */
+export const businessHoursControllerCreateBusinessHours = (
+  businessHoursDto: BodyType<BusinessHoursDto>,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<BusinessHoursDto>(
+    {
+      url: `/business-hours`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: businessHoursDto,
+    },
+    options
+  );
+};
+
+/**
+ * @summary Get business hours
+ */
 export const businessHoursControllerGetBusinessHours = (
-    
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<BusinessHoursDto>(
-      {url: `/business-hours`, method: 'GET'
-    },
-      options);
-    }
-  
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<BusinessHoursDto>(
+    { url: `/business-hours`, method: "GET" },
+    options
+  );
+};
+
+/**
+ * @summary Update business hours
+ */
 export const businessHoursControllerPatchBusinessHours = (
-    businessHoursDto: BodyType<BusinessHoursDto>,
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<BusinessHoursDto>(
-      {url: `/business-hours`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: businessHoursDto
+  patchBusinessHoursDto: BodyType<PatchBusinessHoursDto>,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<BusinessHoursDto>(
+    {
+      url: `/business-hours`,
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      data: patchBusinessHoursDto,
     },
-      options);
-    }
-  
+    options
+  );
+};
+
 export const permissionsControllerGetPermission = (
-    
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<PermissionDto>(
-      {url: `/permissions`, method: 'GET'
-    },
-      options);
-    }
-  
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<PermissionDto>(
+    { url: `/permissions`, method: "GET" },
+    options
+  );
+};
+
 export const labourCostControllerUpdate = (
-    userId: string,
-    updateLabourCostDto: BodyType<UpdateLabourCostDto>,
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<void>(
-      {url: `/labour-cost/${userId}`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: updateLabourCostDto
+  userId: string,
+  updateLabourCostDto: BodyType<UpdateLabourCostDto>,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<void>(
+    {
+      url: `/labour-cost/${userId}`,
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      data: updateLabourCostDto,
     },
-      options);
-    }
-  
+    options
+  );
+};
+
 export const labourCostControllerFindByUserId = (
-    userId: string,
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<LabourCostDto>(
-      {url: `/labour-cost/${userId}`, method: 'GET'
-    },
-      options);
-    }
-  
+  userId: string,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<LabourCostDto>(
+    { url: `/labour-cost/${userId}`, method: "GET" },
+    options
+  );
+};
+
 export const labourCostControllerDelete = (
-    userId: string,
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<void>(
-      {url: `/labour-cost/${userId}`, method: 'DELETE'
-    },
-      options);
-    }
-  
+  userId: string,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<void>(
+    { url: `/labour-cost/${userId}`, method: "DELETE" },
+    options
+  );
+};
+
 export const communicationsControllerGetCommunications = (
-    
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<CommunicationDto>(
-      {url: `/communications`, method: 'GET'
-    },
-      options);
-    }
-  
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<CommunicationDto>(
+    { url: `/communications`, method: "GET" },
+    options
+  );
+};
+
 export const communicationsControllerUpdateCommunications = (
-    updateCommunicationDto: BodyType<UpdateCommunicationDto>,
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<CommunicationDto>(
-      {url: `/communications`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: updateCommunicationDto
+  updateCommunicationDto: BodyType<UpdateCommunicationDto>,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<CommunicationDto>(
+    {
+      url: `/communications`,
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      data: updateCommunicationDto,
     },
-      options);
-    }
-  
+    options
+  );
+};
+
 export const authControllerSignUp = (
-    signUpBodyDto: BodyType<SignUpBodyDto>,
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<void>(
-      {url: `/auth/sign-up`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: signUpBodyDto
+  signUpBodyDto: BodyType<SignUpBodyDto>,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<void>(
+    {
+      url: `/auth/sign-up`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: signUpBodyDto,
     },
-      options);
-    }
-  
+    options
+  );
+};
+
 export const authControllerSignIn = (
-    signInBodyDto: BodyType<SignInBodyDto>,
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<void>(
-      {url: `/auth/sign-in`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: signInBodyDto
+  signInBodyDto: BodyType<SignInBodyDto>,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<void>(
+    {
+      url: `/auth/sign-in`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: signInBodyDto,
     },
-      options);
-    }
-  
+    options
+  );
+};
+
 export const authControllerSignOut = (
-    
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<void>(
-      {url: `/auth/sign-out`, method: 'POST'
-    },
-      options);
-    }
-  
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<void>(
+    { url: `/auth/sign-out`, method: "POST" },
+    options
+  );
+};
+
 export const authControllerGetSessionInfo = (
-    
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<GetSessionInfoDto>(
-      {url: `/auth/session`, method: 'GET'
-    },
-      options);
-    }
-  
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<GetSessionInfoDto>(
+    { url: `/auth/session`, method: "GET" },
+    options
+  );
+};
+
+export const authControllerVerifyUserAndSetPassword = (
+  token: string,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<void>(
+    { url: `/auth/verify/${token}`, method: "PATCH" },
+    options
+  );
+};
+
+export const authControllerGetUserByToken = (
+  token: string,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<void>(
+    { url: `/auth/user/${token}`, method: "GET" },
+    options
+  );
+};
+
+/**
+ * @summary Find user by email
+ */
+export const usersControllerFindByEmail = (
+  params: UsersControllerFindByEmailParams,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<UserSecretDto>(
+    { url: `/users/find-by-email`, method: "GET", params },
+    options
+  );
+};
+
+/**
+ * @summary Get user details
+ */
 export const usersControllerGetUserDetails = (
-    
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<UserDto>(
-      {url: `/users`, method: 'GET'
-    },
-      options);
-    }
-  
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<UserDto>({ url: `/users`, method: "GET" }, options);
+};
+
+/**
+ * @summary Update user
+ */
 export const usersControllerPatchUser = (
-    patchUserDto: BodyType<PatchUserDto>,
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<PatchUserDto>(
-      {url: `/users`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: patchUserDto
+  patchUserDto: BodyType<PatchUserDto>,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<PatchUserDto>(
+    {
+      url: `/users`,
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      data: patchUserDto,
     },
-      options);
-    }
-  
+    options
+  );
+};
+
+/**
+ * @summary Get user by ID
+ */
 export const usersControllerGetUserById = (
-    userId: string,
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<UserDto>(
-      {url: `/users/get-user-by-id/${userId}`, method: 'GET'
-    },
-      options);
-    }
-  
+  userId: string,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<UserDto>(
+    { url: `/users/get-user-by-id/${userId}`, method: "GET" },
+    options
+  );
+};
+
+/**
+ * @summary Create new user without password
+ */
 export const usersControllerCreateUserWithoutPassword = (
-    userWithoutPassword: BodyType<UserWithoutPassword>,
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<void>(
-      {url: `/users/create-new-user-without-password`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: userWithoutPassword
+  userWithoutPassword: BodyType<UserWithoutPassword>,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<void>(
+    {
+      url: `/users/create-new-user-without-password`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: userWithoutPassword,
     },
-      options);
-    }
-  
+    options
+  );
+};
+
+/**
+ * @summary Find verification token
+ */
+export const usersControllerFindVerificationToken = (
+  token: string,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<VerificationTokenDto>(
+    { url: `/users/find-verification-token/${token}`, method: "GET" },
+    options
+  );
+};
+
+/**
+ * @summary Update user password
+ */
+export const usersControllerUpdateUserPassword = (
+  userId: string,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<void>(
+    { url: `/users/update-password/${userId}`, method: "PATCH" },
+    options
+  );
+};
+
+export const usersControllerDeleteUser = (
+  userId: string,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<void>(
+    { url: `/users/${userId}`, method: "DELETE" },
+    options
+  );
+};
+
+/**
+ * @summary Get account details
+ */
 export const accountControllerGetAccount = (
-    
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<AccountDto>(
-      {url: `/account`, method: 'GET'
-    },
-      options);
-    }
-  
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<AccountDto>(
+    { url: `/account`, method: "GET" },
+    options
+  );
+};
+
+/**
+ * @summary Update account details
+ */
 export const accountControllerPatchAccount = (
-    patchAccountDto: BodyType<PatchAccountDto>,
- options?: SecondParameter<typeof createInstance>,) => {
-      return createInstance<AccountDto>(
-      {url: `/account`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: patchAccountDto
+  patchAccountDto: BodyType<PatchAccountDto>,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<AccountDto>(
+    {
+      url: `/account`,
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      data: patchAccountDto,
     },
-      options);
-    }
-  
-export type AppControllerGetHelloResult = NonNullable<Awaited<ReturnType<typeof appControllerGetHello>>>
-export type CompanyControllerGetCompanyResult = NonNullable<Awaited<ReturnType<typeof companyControllerGetCompany>>>
-export type CompanyControllerPatchCompanyResult = NonNullable<Awaited<ReturnType<typeof companyControllerPatchCompany>>>
-export type CompanyControllerGetUsersOfCompanyResult = NonNullable<Awaited<ReturnType<typeof companyControllerGetUsersOfCompany>>>
-export type CompanyDetailsControllerGetCompanyDetailsResult = NonNullable<Awaited<ReturnType<typeof companyDetailsControllerGetCompanyDetails>>>
-export type CompanyDetailsControllerPatchCompanyDetailsResult = NonNullable<Awaited<ReturnType<typeof companyDetailsControllerPatchCompanyDetails>>>
-export type BusinessHoursControllerGetBusinessHoursResult = NonNullable<Awaited<ReturnType<typeof businessHoursControllerGetBusinessHours>>>
-export type BusinessHoursControllerPatchBusinessHoursResult = NonNullable<Awaited<ReturnType<typeof businessHoursControllerPatchBusinessHours>>>
-export type PermissionsControllerGetPermissionResult = NonNullable<Awaited<ReturnType<typeof permissionsControllerGetPermission>>>
-export type LabourCostControllerUpdateResult = NonNullable<Awaited<ReturnType<typeof labourCostControllerUpdate>>>
-export type LabourCostControllerFindByUserIdResult = NonNullable<Awaited<ReturnType<typeof labourCostControllerFindByUserId>>>
-export type LabourCostControllerDeleteResult = NonNullable<Awaited<ReturnType<typeof labourCostControllerDelete>>>
-export type CommunicationsControllerGetCommunicationsResult = NonNullable<Awaited<ReturnType<typeof communicationsControllerGetCommunications>>>
-export type CommunicationsControllerUpdateCommunicationsResult = NonNullable<Awaited<ReturnType<typeof communicationsControllerUpdateCommunications>>>
-export type AuthControllerSignUpResult = NonNullable<Awaited<ReturnType<typeof authControllerSignUp>>>
-export type AuthControllerSignInResult = NonNullable<Awaited<ReturnType<typeof authControllerSignIn>>>
-export type AuthControllerSignOutResult = NonNullable<Awaited<ReturnType<typeof authControllerSignOut>>>
-export type AuthControllerGetSessionInfoResult = NonNullable<Awaited<ReturnType<typeof authControllerGetSessionInfo>>>
-export type UsersControllerGetUserDetailsResult = NonNullable<Awaited<ReturnType<typeof usersControllerGetUserDetails>>>
-export type UsersControllerPatchUserResult = NonNullable<Awaited<ReturnType<typeof usersControllerPatchUser>>>
-export type UsersControllerGetUserByIdResult = NonNullable<Awaited<ReturnType<typeof usersControllerGetUserById>>>
-export type UsersControllerCreateUserWithoutPasswordResult = NonNullable<Awaited<ReturnType<typeof usersControllerCreateUserWithoutPassword>>>
-export type AccountControllerGetAccountResult = NonNullable<Awaited<ReturnType<typeof accountControllerGetAccount>>>
-export type AccountControllerPatchAccountResult = NonNullable<Awaited<ReturnType<typeof accountControllerPatchAccount>>>
+    options
+  );
+};
+
+export type CompanyControllerCreateCompanyResult = NonNullable<
+  Awaited<ReturnType<typeof companyControllerCreateCompany>>
+>;
+export type CompanyControllerGetCompanyResult = NonNullable<
+  Awaited<ReturnType<typeof companyControllerGetCompany>>
+>;
+export type CompanyControllerGetUsersOfCompanyByIdResult = NonNullable<
+  Awaited<ReturnType<typeof companyControllerGetUsersOfCompanyById>>
+>;
+export type CompanyControllerGetUsersOfCompanyResult = NonNullable<
+  Awaited<ReturnType<typeof companyControllerGetUsersOfCompany>>
+>;
+export type CompanyControllerPatchCompanyResult = NonNullable<
+  Awaited<ReturnType<typeof companyControllerPatchCompany>>
+>;
+export type CompanyControllerAddUserToCompanyResult = NonNullable<
+  Awaited<ReturnType<typeof companyControllerAddUserToCompany>>
+>;
+export type CompanyControllerConnectCompanyDetailsToCompanyResult = NonNullable<
+  Awaited<ReturnType<typeof companyControllerConnectCompanyDetailsToCompany>>
+>;
+export type CompanyControllerGetCompanyByIdResult = NonNullable<
+  Awaited<ReturnType<typeof companyControllerGetCompanyById>>
+>;
+export type CompanyDetailsControllerCreateCompanyDetailsResult = NonNullable<
+  Awaited<ReturnType<typeof companyDetailsControllerCreateCompanyDetails>>
+>;
+export type CompanyDetailsControllerGetCompanyDetailsResult = NonNullable<
+  Awaited<ReturnType<typeof companyDetailsControllerGetCompanyDetails>>
+>;
+export type CompanyDetailsControllerPatchCompanyDetailsResult = NonNullable<
+  Awaited<ReturnType<typeof companyDetailsControllerPatchCompanyDetails>>
+>;
+export type CompanyDetailsControllerGetIndustryByCompanyIdResult = NonNullable<
+  Awaited<ReturnType<typeof companyDetailsControllerGetIndustryByCompanyId>>
+>;
+export type BusinessHoursControllerCreateBusinessHoursResult = NonNullable<
+  Awaited<ReturnType<typeof businessHoursControllerCreateBusinessHours>>
+>;
+export type BusinessHoursControllerGetBusinessHoursResult = NonNullable<
+  Awaited<ReturnType<typeof businessHoursControllerGetBusinessHours>>
+>;
+export type BusinessHoursControllerPatchBusinessHoursResult = NonNullable<
+  Awaited<ReturnType<typeof businessHoursControllerPatchBusinessHours>>
+>;
+export type PermissionsControllerGetPermissionResult = NonNullable<
+  Awaited<ReturnType<typeof permissionsControllerGetPermission>>
+>;
+export type LabourCostControllerUpdateResult = NonNullable<
+  Awaited<ReturnType<typeof labourCostControllerUpdate>>
+>;
+export type LabourCostControllerFindByUserIdResult = NonNullable<
+  Awaited<ReturnType<typeof labourCostControllerFindByUserId>>
+>;
+export type LabourCostControllerDeleteResult = NonNullable<
+  Awaited<ReturnType<typeof labourCostControllerDelete>>
+>;
+export type CommunicationsControllerGetCommunicationsResult = NonNullable<
+  Awaited<ReturnType<typeof communicationsControllerGetCommunications>>
+>;
+export type CommunicationsControllerUpdateCommunicationsResult = NonNullable<
+  Awaited<ReturnType<typeof communicationsControllerUpdateCommunications>>
+>;
+export type AuthControllerSignUpResult = NonNullable<
+  Awaited<ReturnType<typeof authControllerSignUp>>
+>;
+export type AuthControllerSignInResult = NonNullable<
+  Awaited<ReturnType<typeof authControllerSignIn>>
+>;
+export type AuthControllerSignOutResult = NonNullable<
+  Awaited<ReturnType<typeof authControllerSignOut>>
+>;
+export type AuthControllerGetSessionInfoResult = NonNullable<
+  Awaited<ReturnType<typeof authControllerGetSessionInfo>>
+>;
+export type AuthControllerVerifyUserAndSetPasswordResult = NonNullable<
+  Awaited<ReturnType<typeof authControllerVerifyUserAndSetPassword>>
+>;
+export type AuthControllerGetUserByTokenResult = NonNullable<
+  Awaited<ReturnType<typeof authControllerGetUserByToken>>
+>;
+export type UsersControllerFindByEmailResult = NonNullable<
+  Awaited<ReturnType<typeof usersControllerFindByEmail>>
+>;
+export type UsersControllerGetUserDetailsResult = NonNullable<
+  Awaited<ReturnType<typeof usersControllerGetUserDetails>>
+>;
+export type UsersControllerPatchUserResult = NonNullable<
+  Awaited<ReturnType<typeof usersControllerPatchUser>>
+>;
+export type UsersControllerGetUserByIdResult = NonNullable<
+  Awaited<ReturnType<typeof usersControllerGetUserById>>
+>;
+export type UsersControllerCreateUserWithoutPasswordResult = NonNullable<
+  Awaited<ReturnType<typeof usersControllerCreateUserWithoutPassword>>
+>;
+export type UsersControllerFindVerificationTokenResult = NonNullable<
+  Awaited<ReturnType<typeof usersControllerFindVerificationToken>>
+>;
+export type UsersControllerUpdateUserPasswordResult = NonNullable<
+  Awaited<ReturnType<typeof usersControllerUpdateUserPassword>>
+>;
+export type UsersControllerDeleteUserResult = NonNullable<
+  Awaited<ReturnType<typeof usersControllerDeleteUser>>
+>;
+export type AccountControllerGetAccountResult = NonNullable<
+  Awaited<ReturnType<typeof accountControllerGetAccount>>
+>;
+export type AccountControllerPatchAccountResult = NonNullable<
+  Awaited<ReturnType<typeof accountControllerPatchAccount>>
+>;

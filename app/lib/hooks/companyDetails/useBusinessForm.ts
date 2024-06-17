@@ -14,6 +14,7 @@ export const useBusinessForm = () => {
   const companyMutation = useMutation({
     mutationFn: companyControllerPatchCompany,
     onSuccess: () => {},
+    onError: () => {},
   });
   const companyDetailsMutation = useMutation({
     mutationFn: companyDetailsControllerPatchCompanyDetails,

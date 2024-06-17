@@ -1,11 +1,8 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import {
-  BusinessHoursDto,
-  businessHoursControllerGetBusinessHours,
-  businessHoursControllerPatchBusinessHours,
-} from "../api/generated";
+
 import { useForm } from "react-hook-form";
 import queryClient from "../api/query-client";
+import { businessHoursControllerGetBusinessHours, businessHoursControllerPatchBusinessHours, BusinessHoursDto } from "../api/generated";
 
 const businessHoursKey = ["businessHours"];
 

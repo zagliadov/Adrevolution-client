@@ -1,12 +1,15 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, UseQueryResult } from "@tanstack/react-query";
+
+import { useForm } from "react-hook-form";
+import _ from "lodash";
 import {
   companyControllerGetCompany,
   companyControllerGetUsersOfCompany,
   companyControllerPatchCompany,
   CompanyDto,
+  PatchCompanyDto,
+  UserDto,
 } from "../api/generated";
-import { useForm } from "react-hook-form";
-import _ from "lodash";
 
 const companyKey = ["company"];
 const usersOfCompanyKey = ["usersOfCompany"];
@@ -30,7 +33,7 @@ export const useGetUsersOfCompany = () => {
 };
 
 export const useCompanyUpdate = () => {
-  const { register, handleSubmit, setValue } = useForm<CompanyDto>();
+  const { register, handleSubmit, setValue } = useForm<PatchCompanyDto>();
   const { refetch } = useGetCompany();
 
   const companyMutation = useMutation({
@@ -43,11 +46,11 @@ export const useCompanyUpdate = () => {
     },
   });
 
-  const debouncedMutate = _.debounce((data: CompanyDto) => {
+  const debouncedMutate = _.debounce((data: PatchCompanyDto) => {
     companyMutation.mutate(data);
   }, 1000);
 
-  const onSubmit = (data: CompanyDto) => {
+  const onSubmit = (data: PatchCompanyDto) => {
     debouncedMutate(data);
   };
 
@@ -55,7 +58,7 @@ export const useCompanyUpdate = () => {
     setValue,
     register,
     handleSubmit: handleSubmit(onSubmit),
-    handleUpdate: (data: CompanyDto) => onSubmit(data),
+    handleUpdate: (data: PatchCompanyDto) => onSubmit(data),
     isPending: companyMutation.isPending,
     isError: companyMutation.isError,
     isSuccess: companyMutation.isSuccess,

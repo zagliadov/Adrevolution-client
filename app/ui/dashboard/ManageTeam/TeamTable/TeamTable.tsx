@@ -73,7 +73,7 @@ export const TeamTable: FC = () => {
           })}
         </tbody>
       </table>
-      <div className="flex md:hidden rounded-md">
+      <div className="flex flex-col space-y-2 md:hidden rounded-md">
         {_.map(companyUsers, (user) => {
           const id = _.get(user, IFormField.ID, "");
           const firstName = _.get(user, IFormField.FIRST_NAME, "");
