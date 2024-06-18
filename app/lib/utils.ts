@@ -1,26 +1,26 @@
 import { UserDto } from "./api/generated";
-import { CalendarEvent, CalendarResource } from "./definitions";
+import { Resource, Event } from "./definitions";
 
-export const transformUsersToResources = (
-  users: UserDto[]
-): CalendarResource[] => {
-  return users.map((user) => ({
+export const transformUsersToResources = (users: UserDto[]): Resource[] => {
+  return users.map((user, index) => ({
     id: user.id,
     name: `${user.firstName} ${user.lastName}`,
-    eventColor: "blue", // Или другой цвет, если нужно
-    meta: { job: "Developer"}
+    email: user.email,
+    lastLogin: user.lastLogin,
   }));
 };
 
-export const transformUsersToEvents = (users: UserDto[]): CalendarEvent[] => {
-  return users.map((user) => ({
-    id: user.id,
-    name: `Some - event`,
-    startDate: user.lastLogin ?? new Date().toISOString(), // Используем lastLogin или текущую дату для startDate
-    allDay: true,
-    endDate: new Date(
-      new Date(user.lastLogin ?? new Date()).getTime() + 60 * 60 * 1000
-    ).toISOString(), // Пример длительности 1 час
-    resourceId: user.id, // Привязка события к пользователю
-  }));
+export const transformUsersToEvents = (users: UserDto[]): Event[] => {
+  return users.map((user, index) => {
+    const startDate = user.lastLogin ? new Date(user.lastLogin) : new Date();
+    const endDate = new Date(startDate.getTime() + 3600000);
+
+    return {
+      id: index + 1,
+      resourceId: user.id,
+      startDate,
+      endDate,
+      name: `Event for ${user.firstName} ${user.lastName}`,
+    };
+  });
 };

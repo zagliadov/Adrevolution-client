@@ -81,27 +81,19 @@ export interface IBusinessData {
   [IFormField.ESTIMATED_ANNUAL_REVENUE]: string;
 }
 
-export interface CalendarResource {
-  id: string;
+export interface Resource {
+  id: number | string;
   name: string;
-  eventColor: string;
+  expanded?: boolean;
+  children?: Resource[];
+  email?: string;
+  lastLogin?: string;
 }
 
-export interface CalendarEvent {
-  id: string;
-  startDate: string;
-  endDate: string;
-  name: string;
+export interface Event {
+  id: number | string;
   resourceId: string;
-  eventColor?: string;
-}
-
-export interface CalendarData {
-  success: boolean;
-  resources: {
-    rows: CalendarResource[];
-  };
-  events: {
-    rows: CalendarEvent[];
-  };
+  startDate: Date;
+  endDate: Date;
+  name: string;
 }
