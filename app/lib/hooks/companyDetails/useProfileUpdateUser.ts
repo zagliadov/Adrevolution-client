@@ -4,10 +4,8 @@ import { useForm } from "react-hook-form";
 import { ROUTES } from "../../constants/routes";
 import {
   companyControllerPatchCompany,
-  companyDetailsControllerPatchCompanyDetails,
   usersControllerPatchUser,
 } from "../../api/generated";
-import { IFormField } from "../../definitions";
 
 /**
  * Custom hook to handle user and company updates.
@@ -43,17 +41,6 @@ export const useProfileUpdateUser = () => {
   });
 
   /**
-   * Mutation for updating company details data.
-   */
-  const companyDetailsModelMutation = useMutation({
-    mutationFn: companyDetailsControllerPatchCompanyDetails,
-    onSuccess: () => {
-      // Replaces current route with the welcome business route upon successful company update
-      router.replace(ROUTES.WELCOME_BUSINESS);
-    },
-  });
-
-  /**
    * Handles form submission.
    *
    * @param {object} data - The form data containing user and company fields.
@@ -78,8 +65,6 @@ export const useProfileUpdateUser = () => {
           // Mutates company data after successful user update
           companyModelMutation.mutate({
             phoneNumber,
-          });
-          companyDetailsModelMutation.mutate({
             industry,
           });
         },

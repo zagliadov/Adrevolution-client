@@ -8,14 +8,14 @@ import {
   UseFormWatch,
 } from "react-hook-form";
 
-interface PermissionLevel {
+interface PositionType {
   value: string;
   label: string;
   description: string;
   permissions: Record<string, boolean | string>;
 }
 
-const permissionLevels: PermissionLevel[] = [
+const permissionLevels: PositionType[] = [
   {
     value: PERMISSION_LEVEL.WORKER,
     label: "Worker",
@@ -122,14 +122,14 @@ export const NewUserPermissionLevels: FC<IProps> = ({
 // import React, { useEffect } from "react";
 // import { useForm, Controller } from "react-hook-form";
 
-// interface PermissionLevel {
+// interface PositionType {
 //   value: string;
 //   label: string;
 //   description: string;
 //   permissions: Record<string, boolean | string>;
 // }
 
-// const permissionLevels: PermissionLevel[] = [
+// const permissionLevels: PositionType[] = [
 //   {
 //     value: "Limited worker",
 //     label: "Limited worker",

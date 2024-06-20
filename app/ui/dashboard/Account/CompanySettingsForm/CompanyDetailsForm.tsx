@@ -10,10 +10,10 @@ import { Spinner } from "@/app/ui/spinner";
 import { BusinessHoursEdit } from "./BusinessHoursEdit";
 
 const initializeCompanyData = (data: CompanyDto, setValue: Function) => {
-  setValue(IFormField.COMPANY_NAME, data.companyName);
+  setValue(IFormField.COMPANY_NAME, data.name);
   setValue(IFormField.PHONE_NUMBER, data.phoneNumber);
   setValue(IFormField.WEBSITE_URL, data.websiteURL);
-  setValue(IFormField.COMPANY_EMAIL, data.companyEmail);
+  setValue(IFormField.COMPANY_EMAIL, data.email);
   setValue(IFormField.STREET1, data.street1);
   setValue(IFormField.CITY, data.city);
   setValue(IFormField.POSTCODE, data.postCode);
@@ -160,10 +160,10 @@ export const CompanyDetailsForm: FC = () => {
             inputClassName="input input-bordered text-primary w-full"
           />
           <TextInput
-            label="Email address"
+            label="Time format"
             name={IFormField.TIME_FORMAT}
             type="text"
-            placeholder="Email address"
+            placeholder="Time format"
             register={register}
             containerClassName="w-full"
             labelClassName=""

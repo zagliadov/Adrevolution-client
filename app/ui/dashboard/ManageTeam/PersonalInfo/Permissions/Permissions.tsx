@@ -1,30 +1,31 @@
 "use client";
 
-import { PermissionDto } from "@/app/lib/api/generated";
+import { PermissionDto, PositionDto } from "@/app/lib/api/generated";
 import { PERMISSION_LEVEL } from "@/app/lib/definitions";
 import { FC } from "react";
 
 interface IProps {
-  userPermission: PermissionDto | undefined;
-  userPermissionIsSuccess: boolean;
+  userPosition: PositionDto | undefined;
+  userPositionIsSuccess: boolean;
 }
 
 export const Permissions: FC<IProps> = ({
-  userPermission,
-  userPermissionIsSuccess,
+  userPosition,
+  userPositionIsSuccess,
 }) => {
-  if (!userPermissionIsSuccess) return null;
+  if (!userPositionIsSuccess) return null;
 
-  const isCompanyOwner =
-    userPermission?.isOwner &&
-    userPermission?.level === PERMISSION_LEVEL.COMPANY_OWNER;
-  const isAdmin = userPermission?.isAdmin;
-  const permissionLevel = userPermission?.level;
+  console.log(userPosition, "userPositino")
+  // const isAdmin = userPosition?.isAdmin;
+  // const permissionLevel =
+  //   userPermission?.userPositionId as keyof typeof PERMISSION_LEVEL;
+
+  // const isCompanyOwner = permissionLevel === PERMISSION_LEVEL.COMPANY_OWNER;
 
   return (
     <div className="border border-base-300 rounded-md p-4 space-y-4">
       <h3 className="font-bold text-2xl">Permissions</h3>
-      {isCompanyOwner && (
+      {/* {isCompanyOwner && (
         <div className="flex flex-col">
           <p className="text-lg">
             You are the Company Owner. You have the highest level of
@@ -69,7 +70,7 @@ export const Permissions: FC<IProps> = ({
       )}
       {!isCompanyOwner && !isAdmin && !permissionLevel && (
         <p className="text-lg">You have limited permissions.</p>
-      )}
+      )} */}
     </div>
   );
 };

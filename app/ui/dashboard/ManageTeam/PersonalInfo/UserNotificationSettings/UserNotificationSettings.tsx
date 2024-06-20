@@ -1,16 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  useCompanyUpdate,
-  useGetCommunications,
-} from "@/app/lib/queries/communications";
 import { FC } from "react";
 import { Spinner } from "@/app/ui/spinner";
+import {
+  useGetNotificationSettings,
+  useNotificationSettingsUpdate,
+} from "@/app/lib/queries/useNotificationSettings";
 
-export const Communications: FC = () => {
-  const { data: communications, isSuccess } = useGetCommunications();
-  const { handleUpdate, isPending } = useCompanyUpdate();
+export const UserNotificationSettings: FC = () => {
+  const { data: communications, isSuccess } = useGetNotificationSettings();
+  const { handleUpdate, isPending } = useNotificationSettingsUpdate();
   const [surveys, setSurveys] = useState<boolean>(true);
   const [errorMessages, setErrorMessages] = useState<boolean>(true);
 
@@ -29,7 +29,7 @@ export const Communications: FC = () => {
     setErrorMessages((prev) => !prev);
   };
 
-  const handleUpdateCommunication = async () => {
+  const handleUpdateNotifications = async () => {
     await handleUpdate({
       surveys,
       errorMessages,
@@ -75,13 +75,13 @@ export const Communications: FC = () => {
           </label>
         </div>
         <span className="label-text text-neutral">
-          Get notified of warnings and errors in our (E.g. Undeliverable
-          client emails or QuickBooks Online sync errors)
+          Get notified of warnings and errors in our (E.g. Undeliverable client
+          emails or QuickBooks Online sync errors)
         </span>
       </div>
       <button
         className="btn btn-success btn-outline w-full md:w-20 flex items-center"
-        onClick={handleUpdateCommunication}
+        onClick={handleUpdateNotifications}
         disabled={isPending}
         type="button"
       >

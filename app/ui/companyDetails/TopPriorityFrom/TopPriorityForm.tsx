@@ -2,14 +2,14 @@
 
 import { ROUTES } from "@/app/lib/constants/routes";
 import { IFormField } from "@/app/lib/definitions";
-import { useCompanyDetailsUpdate } from "@/app/lib/hooks/companyDetails/useCompanyDetailsUpdate";
 import { useRouter } from "next/navigation";
 import { BaseSyntheticEvent, FC, useState } from "react";
 import { SuccessButton } from "../../Button/SuccessButton/SuccessButton";
+import { useCompanyUpdate } from "@/app/lib/queries/company";
 
 export const TopPriorityForm: FC = () => {
   const [selectedOption, setSelectedOption] = useState("Win more work");
-  const { register, handleSubmit, isPending } = useCompanyDetailsUpdate();
+  const { register, handleSubmit, isPending } = useCompanyUpdate();
   const router = useRouter();
 
   const handleOptionChange = (value: string) => {

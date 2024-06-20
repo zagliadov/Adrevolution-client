@@ -8,10 +8,12 @@ import { ROUTES } from "@/app/lib/constants/routes";
 import { formatEnglishDate } from "@/app/lib/helpers";
 import _ from "lodash";
 import { IFormField } from "@/app/lib/definitions";
+import { useGetCompanyResources } from "@/app/lib/queries/resources";
 
 export const TeamTable: FC = () => {
   const { data: companyUsers, isLoading, error } = useGetUsersOfCompany();
-
+  const { data: resources } = useGetCompanyResources();
+  console.log(resources, "resources")
   if (isLoading) {
     return <div>Loading...</div>;
   }

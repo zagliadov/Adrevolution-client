@@ -3,26 +3,29 @@
 import { FC, useEffect, useState } from "react";
 import { NumericFormat } from "react-number-format";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
-import {
-  useLabourCostFindByUserId,
-  useLabourCostUpdate,
-} from "@/app/lib/queries/labourCost";
 import { useModal } from "@/app/lib/hooks/useModal";
 import { Spinner } from "@/app/ui/spinner";
+import {
+  useGetPaymentTypeByUserId,
+  useUpdatePaymentType,
+} from "@/app/lib/queries/paymentType";
+import { UpdatePaymentTypeDtoCostUnit } from "@/app/lib/api/generated";
 
 interface ILabourCostProps {
   userId: string;
 }
+
 export const LabourCost: FC<ILabourCostProps> = ({ userId }) => {
-  const { data } = useLabourCostFindByUserId(userId);
-  const { handleUpdate, isPending } = useLabourCostUpdate(userId);
+  const { data } = useGetPaymentTypeByUserId(userId);
+  const { handleUpdate, isPending } = useUpdatePaymentType(userId);
   const { openModal, closeModal } = useModal("change-labour-cost");
   const [labourCost, setLabourCost] = useState<string>("0.00");
-  const [costUnit, setCostUnit] = useState("PER_HOUR");
+  const [costUnit, setCostUnit] =
+    useState<UpdatePaymentTypeDtoCostUnit>("PER_HOUR");
 
   useEffect(() => {
-    if (data) {
-      setLabourCost(data.labourCost.toFixed(2));
+    if (data && data.labourCost !== undefined) {
+      setLabourCost(data.labourCost);
       setCostUnit(data.costUnit);
     }
   }, [data]);
@@ -32,11 +35,11 @@ export const LabourCost: FC<ILabourCostProps> = ({ userId }) => {
   };
 
   const handleUnitChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setCostUnit(event.target.value);
+    setCostUnit(event.target.value as UpdatePaymentTypeDtoCostUnit);
   };
 
   const handleChangeLabourCost = async () => {
-    await handleUpdate({ labourCost: parseFloat(labourCost), costUnit });
+    await handleUpdate({ labourCost: labourCost, costUnit });
     closeModal();
   };
 

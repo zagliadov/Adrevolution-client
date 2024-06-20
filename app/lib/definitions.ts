@@ -15,13 +15,14 @@ export enum IFormField {
   PHONE_NUMBER = "phoneNumber",
   INDUSTRY = "industry",
   WEBSITE_URL = "websiteURL",
-  COMPANY_NAME = "companyName",
-  COMPANY_EMAIL = "companyEmail",
+  COMPANY_NAME = "name",
+  COMPANY_EMAIL = "email",
   TEAM_SIZE = "teamSize",
   ESTIMATED_ANNUAL_REVENUE = "estimatedAnnualRevenue",
   TOP_PRIORITY = "topPriority",
   HEARD_ABOUT_US = "heardAboutUs",
   STREET1 = "street1",
+  STREET2 = "street2",
   CITY = "city",
   STATE = "state",
   POSTCODE = "postCode",
@@ -35,6 +36,22 @@ export enum IFormField {
   PERMISSION_LEVEL = "permissionLevel",
   INVITER_FIRST_NAME = "inviterFirstName",
   INVITER_LAST_NAME = "inviterLastName",
+}
+
+export enum CompanyType {
+  Transportation = "Transportation",
+}
+export enum TransportCompanyType {
+  FreightTransportCompany = 'Freight Transport Company',
+  PassengerTransportCompany = 'Passenger Transport Company',
+  LogisticsAndSupplyChainCompany = 'Logistics and Supply Chain Company',
+  CourierAndDeliveryService = 'Courier and Delivery Service',
+  MovingAndRelocationCompany = 'Moving and Relocation Company',
+  MaritimeShippingCompany = 'Maritime Shipping Company',
+  AirCargoCompany = 'Air Cargo Company',
+  RailTransportCompany = 'Rail Transport Company',
+  IntermodalTransportCompany = 'Intermodal Transport Company',
+  PublicTransportCompany = 'Public Transport Company',
 }
 
 export enum PERMISSION {
@@ -97,3 +114,4 @@ export interface Event {
   endDate: Date;
   name: string;
 }
+

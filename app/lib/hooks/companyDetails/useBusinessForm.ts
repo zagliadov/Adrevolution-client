@@ -1,10 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import {
-  companyControllerPatchCompany,
-  companyDetailsControllerPatchCompanyDetails,
-} from "@/app/lib/api/generated";
+import { companyControllerPatchCompany } from "@/app/lib/api/generated";
 import { IBusinessData } from "@/app/lib/definitions";
 import { ROUTES } from "../../constants/routes";
 
@@ -16,19 +13,13 @@ export const useBusinessForm = () => {
     onSuccess: () => {},
     onError: () => {},
   });
-  const companyDetailsMutation = useMutation({
-    mutationFn: companyDetailsControllerPatchCompanyDetails,
-    onSuccess: () => {
-      router.replace(ROUTES.WELCOME_TOP_PRIORITY);
-    },
-  });
 
   const onSubmit = async (data: IBusinessData) => {
-    const { companyName, teamSize, estimatedAnnualRevenue } = data;
+    const { name, teamSize, estimatedAnnualRevenue } = data;
 
     try {
-      await companyMutation.mutateAsync({ companyName });
-      await companyDetailsMutation.mutateAsync({
+      await companyMutation.mutateAsync({
+        name,
         teamSize,
         estimatedAnnualRevenue,
       });
@@ -39,7 +30,7 @@ export const useBusinessForm = () => {
   };
 
   return {
-    isPending: companyDetailsMutation.isPending,
+    isPending: companyMutation.isPending,
     register,
     handleSubmit,
     onSubmit,

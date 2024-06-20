@@ -1,5 +1,4 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-
 import { useForm } from "react-hook-form";
 import _ from "lodash";
 import { useRouter } from "next/navigation";
@@ -10,6 +9,8 @@ import {
   usersControllerGetUserById,
   usersControllerGetUserDetails,
   usersControllerPatchUser,
+  UserWithoutPassword,
+  PatchUserDto,
 } from "../api/generated";
 
 const userKey = ["user"];
@@ -25,7 +26,7 @@ export const useGetUserDetails = () => {
 export const useCreateUserWithoutPassword = () => {
   const router = useRouter();
   const { register, handleSubmit, setValue, unregister, watch } =
-    useForm<any>();
+    useForm<UserWithoutPassword>();
 
   const newUserCreateMutation = useMutation({
     mutationFn: usersControllerCreateUserWithoutPassword,
@@ -60,7 +61,7 @@ export const useGetUserById = (userId: string) => {
 };
 
 export const useUserUpdate = () => {
-  const { register, handleSubmit, setValue } = useForm<UserDto>();
+  const { register, handleSubmit, setValue } = useForm<PatchUserDto>();
   const { refetch } = useGetUserDetails();
 
   const userMutation = useMutation({
@@ -73,11 +74,11 @@ export const useUserUpdate = () => {
     },
   });
 
-  const debouncedMutate = _.debounce((data: UserDto) => {
+  const debouncedMutate = _.debounce((data: PatchUserDto) => {
     userMutation.mutate(data);
   }, 1000);
 
-  const onSubmit = (data: UserDto) => {
+  const onSubmit = (data: PatchUserDto) => {
     debouncedMutate(data);
   };
 

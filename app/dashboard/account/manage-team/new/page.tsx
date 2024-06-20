@@ -6,8 +6,8 @@ import {
   useCreateUserWithoutPassword,
   useGetUserDetails,
 } from "@/app/lib/queries/user";
-import { NewUserCommunication } from "@/app/ui/dashboard/ManageTeam/PersonalInfo/Communications/NewUserCommunication";
-import { NewUserLabourCost } from "@/app/ui/dashboard/ManageTeam/PersonalInfo/LabourCost/NewUserLabourCost";
+import { NewUserCommunication } from "@/app/ui/dashboard/ManageTeam/PersonalInfo/UserNotificationSettings/NewUserCommunication";
+import { NewUserLabourCost } from "@/app/ui/dashboard/ManageTeam/PersonalInfo/PaymentType/NewUserPaymentType";
 import { NewUserPermissions } from "@/app/ui/dashboard/ManageTeam/PersonalInfo/Permissions/NewUserPermissions";
 import TextInput from "@/app/ui/DataInput/TextInput/TextInput";
 import { ErrorMessage } from "@/app/ui/ErrorMessage/ErrorMessage";
@@ -179,16 +179,20 @@ export default function NewUser() {
         <NewUserCommunication register={register} watch={watch} />
         <div className="divider"></div>
         <div className="flex justify-end">
-          <button className="btn btn-success" type="submit">
-            {false ? (
-              <Spinner className="text-primary w-6 h-6" />
-            ) : (
-              "Update Settings"
-            )}
-          </button>
-          <div className="flex justify-center items-center relative h-6">
-        {isError && <ErrorMessage message="Incorrect email or password." />}
-      </div>
+          <div className="flex flex-col">
+            <button className="btn btn-success" type="submit">
+              {false ? (
+                <Spinner className="text-primary w-6 h-6" />
+              ) : (
+                "Update Settings"
+              )}
+            </button>
+            <div className="flex justify-center items-center relative h-6">
+              {isError && (
+                <ErrorMessage message="Incorrect email or password." />
+              )}
+            </div>
+          </div>
         </div>
       </form>
     </div>

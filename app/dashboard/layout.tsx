@@ -7,9 +7,12 @@ import { SideNav } from "../ui/dashboard/SideNav";
 import { AccountMenu } from "../ui/home/Header/AccountMenu";
 import _ from "lodash";
 import { Spinner } from "../ui/spinner";
+import { IFormField } from "../lib/definitions";
+import { get } from "lodash";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { data, isPending } = useGetCompany();
+  const { data: company, isPending } = useGetCompany();
+  const companyName = get(company, IFormField.COMPANY_NAME, "default name");
   return (
     <div className="flex min-h-screen flex-row">
       {isPending ? (
@@ -24,7 +27,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
           <main className="w-full md:ml-52 pt-6">
             <nav className="px-6 flex items-center justify-between">
-              <span>{data?.companyName}</span>
+              <span>{companyName}</span>
               <div className="flex items-start md:items-center">
                 <DrawerMenu />
                 <AccountMenu dashboardSettingsLinks={dashboardSettingsLinks} />

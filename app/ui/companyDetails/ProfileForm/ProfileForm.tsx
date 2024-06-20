@@ -1,6 +1,6 @@
 "use client";
 
-import { IFormField } from "@/app/lib/definitions";
+import { CompanyType, IFormField, TransportCompanyType } from "@/app/lib/definitions";
 import { useProfileUpdateUser } from "@/app/lib/hooks/companyDetails/useProfileUpdateUser";
 import { FC } from "react";
 import { SuccessButton } from "../../Button/SuccessButton/SuccessButton";
@@ -43,9 +43,12 @@ const options = [
     ],
   },
   {
+    label: CompanyType.Transportation,
+    options: Object.values(TransportCompanyType),
+  },
+  {
     label: "Other",
     options: [
-      "Transportation",
       "Appliance Repair",
       "Flooring Service",
       "Handyman",

@@ -11,11 +11,12 @@ import TextInput from "@/app/ui/DataInput/TextInput/TextInput";
 import { IFormField } from "@/app/lib/definitions";
 import { Spinner } from "@/app/ui/spinner";
 import { ChangePasswordModal } from "@/app/ui/dashboard/ManageTeam/PersonalInfo/ChangePasswordModal/ChangePasswordModal";
-import { LabourCost } from "@/app/ui/dashboard/ManageTeam/PersonalInfo/LabourCost/LabourCost";
+import { LabourCost } from "@/app/ui/dashboard/ManageTeam/PersonalInfo/PaymentType/PaymentType";
 import { useEffect } from "react";
 import { BusinessHoursEdit } from "@/app/ui/dashboard/Account/CompanySettingsForm/BusinessHoursEdit";
 import { Permissions } from "@/app/ui/dashboard/ManageTeam/PersonalInfo/Permissions/Permissions";
-import { Communications } from "@/app/ui/dashboard/ManageTeam/PersonalInfo/Communications/Communications";
+import { UserNotificationSettings } from "@/app/ui/dashboard/ManageTeam/PersonalInfo/UserNotificationSettings/UserNotificationSettings";
+import { useGetUserPosition } from "@/app/lib/queries/userPosition";
 
 type Params = {
   params: {
@@ -24,7 +25,9 @@ type Params = {
 };
 export default function UserId({ params }: Params) {
   const { data: userPermission, isSuccess: userPermissionIsSuccess } =
-    useGetPermission();
+    useGetPermission(params.userId);
+
+  const { data: userPosition, isSuccess: userPositionIsSuccess } = useGetUserPosition();
   const { data: userById } = useGetUserById(params.userId);
   const { register, setValue, handleSubmit, isPending } = useUserUpdate();
   useEffect(() => {
@@ -204,11 +207,11 @@ export default function UserId({ params }: Params) {
         />
         <div className="divider"></div>
         <Permissions
-          userPermission={userPermission}
-          userPermissionIsSuccess={userPermissionIsSuccess}
+          userPosition={userPosition}
+          userPositionIsSuccess={userPositionIsSuccess}
         />
         <div className="divider"></div>
-        <Communications />
+        <UserNotificationSettings />
         <div className="divider"></div>
         <div className="flex justify-end">
           <button className="btn btn-success">

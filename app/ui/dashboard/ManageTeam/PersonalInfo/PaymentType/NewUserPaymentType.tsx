@@ -26,7 +26,7 @@ export const NewUserLabourCost: FC<INewUserLabourCostProps> = ({
 
   useEffect(() => {
     // Setting default values if needed
-    setValue(IFormField.LABOUR_COST, 0);
+    setValue(IFormField.LABOUR_COST as string, "0");
     setValue(IFormField.COST_UNIT, "PER_HOUR");
   }, [setValue]);
 

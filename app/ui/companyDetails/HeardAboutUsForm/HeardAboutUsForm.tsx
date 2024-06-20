@@ -2,14 +2,14 @@
 
 import { ROUTES } from "@/app/lib/constants/routes";
 import { IFormField } from "@/app/lib/definitions";
-import { useCompanyDetailsUpdate } from "@/app/lib/hooks/companyDetails/useCompanyDetailsUpdate";
 import { useRouter } from "next/navigation";
 import { BaseSyntheticEvent, FC } from "react";
 import { SuccessButton } from "../../Button/SuccessButton/SuccessButton";
 import TextInput from "../../DataInput/TextInput/TextInput";
+import { useCompanyUpdate } from "@/app/lib/queries/company";
 
 export const HeardAboutUsForm: FC = () => {
-  const { register, handleSubmit, isPending } = useCompanyDetailsUpdate();
+  const { register, handleSubmit, isPending } = useCompanyUpdate();
   const router = useRouter();
 
   const onSubmit = async (
@@ -28,7 +28,7 @@ export const HeardAboutUsForm: FC = () => {
         register={register}
         required={true}
       />
-      
+
       <SuccessButton isPending={isPending}>Next</SuccessButton>
     </form>
   );

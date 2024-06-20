@@ -14,6 +14,7 @@ paths:
                 $ref: '#/components/schemas/CompanyDto'
       tags:
         - Company
+  /company/details:
     get:
       operationId: CompanyController_getCompany
       summary: Get company details
@@ -112,26 +113,6 @@ paths:
           description: Successfully added user to company.
       tags:
         - Company
-  /company/connect-company-details/{companyId}/{companyDetailsId}:
-    patch:
-      operationId: CompanyController_connectCompanyDetailsToCompany
-      summary: Connect company details to company
-      parameters:
-        - name: companyId
-          required: true
-          in: path
-          schema:
-            type: string
-        - name: companyDetailsId
-          required: true
-          in: path
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Successfully connected company details to company.
-      tags:
-        - Company
   /company/get-company-by-id/{companyId}:
     get:
       operationId: CompanyController_getCompanyById
@@ -149,82 +130,22 @@ paths:
           description: Company or users not found
       tags:
         - Company
-  /company-details:
-    post:
-      operationId: CompanyDetailsController_createCompanyDetails
-      summary: Create new company details
-      parameters: []
-      responses:
-        '200':
-          description: Successfully created company details.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CompanyDetailsDto'
-        '409':
-          description: Company details already exist for this user
-      tags:
-        - Company Details
-  /company-details/get:
+  /company/resources:
     get:
-      operationId: CompanyDetailsController_getCompanyDetails
-      summary: Get company details
+      operationId: CompanyController_getCompanyResources
+      summary: Get company resources
       parameters: []
       responses:
         '200':
-          description: Successfully retrieved company details.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CompanyDetailsDto'
-        '404':
-          description: Company details not found
-      tags:
-        - Company Details
-  /company-details/patch:
-    patch:
-      operationId: CompanyDetailsController_patchCompanyDetails
-      summary: Update company details
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchCompanyDetailsDto'
-      responses:
-        '200':
-          description: Successfully updated company details.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CompanyDetailsDto'
-        '400':
-          description: Invalid input
-      tags:
-        - Company Details
-  /company-details/industry/{companyId}:
-    get:
-      operationId: CompanyDetailsController_getIndustryByCompanyId
-      summary: Get industry by company ID
-      parameters:
-        - name: companyId
-          required: true
-          in: path
-          description: ID of the company
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Successfully retrieved industry by company ID.
+          description: Successfully retrieved company resources.
           content:
             application/json:
               schema:
                 type: string
         '404':
-          description: Company not found
+          description: Resources not found
       tags:
-        - Company Details
+        - Company
   /business-hours:
     post:
       operationId: BusinessHoursController_createBusinessHours
@@ -283,22 +204,99 @@ paths:
           description: Invalid input
       tags:
         - Business hours
-  /permissions:
+  /business-hours/{userId}:
     get:
-      operationId: PermissionsController_getPermission
-      parameters: []
+      operationId: BusinessHoursController_getBusinessHoursByUserId
+      summary: Get business hours by user ID
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
       responses:
         '200':
-          description: ''
+          description: Successfully retrieved business hours
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessHoursDto'
+        '404':
+          description: Business hours not found
+      tags:
+        - Business hours
+    patch:
+      operationId: BusinessHoursController_patchBusinessHoursById
+      summary: Patch business hours by user ID
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchBusinessHoursDto'
+      responses:
+        '200':
+          description: Successfully updated business hours
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessHoursDto'
+        '400':
+          description: Invalid input
+      tags:
+        - Business hours
+  /permissions:
+    post:
+      operationId: PermissionsController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePermissionDto'
+      responses:
+        '201':
+          description: Permission created successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PermissionDto'
-  /labour-cost/{userId}:
-    patch:
-      operationId: LabourCostController_update
+        '400':
+          description: Invalid input data
+      tags:
+        - Permissions
+  /permissions/{userId}:
+    get:
+      operationId: PermissionsController_getPermission
       parameters:
         - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Permission retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionDto'
+        '404':
+          description: Permission not found
+      tags:
+        - Permissions
+  /permissions/{id}:
+    patch:
+      operationId: PermissionsController_update
+      parameters:
+        - name: id
           required: true
           in: path
           schema:
@@ -308,27 +306,84 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateLabourCostDto'
+              $ref: '#/components/schemas/UpdatePermissionDto'
       responses:
         '200':
-          description: ''
-    get:
-      operationId: LabourCostController_findByUserId
-      parameters:
-        - name: userId
-          required: true
-          in: path
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
+          description: Permission updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LabourCostDto'
+                $ref: '#/components/schemas/PermissionDto'
+        '404':
+          description: Permission not found
+      tags:
+        - Permissions
     delete:
-      operationId: LabourCostController_delete
+      operationId: PermissionsController_delete
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Permission deleted successfully
+        '404':
+          description: Permission not found
+      tags:
+        - Permissions
+  /payment-type:
+    post:
+      operationId: PaymentTypeController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePaymentTypeDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentTypeDto'
+        '400':
+          description: Invalid input data
+      tags:
+        - Payment type
+  /payment-type/{userId}:
+    patch:
+      operationId: PaymentTypeController_update
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePaymentTypeDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentTypeDto'
+        '400':
+          description: Invalid input data
+        '404':
+          description: Payment Type not found
+      tags:
+        - Payment type
+    get:
+      operationId: PaymentTypeController_findByUserId
       parameters:
         - name: userId
           required: true
@@ -338,33 +393,257 @@ paths:
       responses:
         '200':
           description: ''
-  /communications:
-    get:
-      operationId: CommunicationsController_getCommunications
-      parameters: []
-      responses:
-        '200':
-          description: ''
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CommunicationDto'
+                $ref: '#/components/schemas/PaymentTypeDto'
+        '404':
+          description: Payment Type not found
+      tags:
+        - Payment type
+    delete:
+      operationId: PaymentTypeController_delete
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Payment Type deleted successfully
+        '404':
+          description: Payment Type not found
+      tags:
+        - Payment type
+  /user-notification-settings:
+    post:
+      operationId: UserNotificationSettingsController_createUserNotificationSettings
+      summary: Create user notifications
+      parameters: []
+      responses:
+        '200':
+          description: Successfully created user notifications.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserNotificationSettingsService'
+      tags:
+        - User notification settings
+    get:
+      operationId: UserNotificationSettingsController_getUserNotificationSettings
+      summary: Get user notifications
+      parameters: []
+      responses:
+        '200':
+          description: Successfully retrieved user notifications.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserNotificationSettingsDto'
+      tags:
+        - User notification settings
     patch:
-      operationId: CommunicationsController_updateCommunications
+      operationId: UserNotificationSettingsController_updateUserNotificationSettings
+      summary: Update user notifications
       parameters: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateCommunicationDto'
+              $ref: '#/components/schemas/UpdateUserNotificationSettingsDto'
       responses:
         '200':
-          description: ''
+          description: Successfully updated user notifications.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CommunicationDto'
+                $ref: '#/components/schemas/UserNotificationSettingsDto'
+      tags:
+        - User notification settings
+  /user-notification-settings/user/{userId}:
+    get:
+      operationId: UserNotificationSettingsController_getUserNotificationSettingsByUserId
+      summary: Get notifications by user ID
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved notifications by user ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserNotificationSettingsDto'
+        '404':
+          description: User not found
+      tags:
+        - User notification settings
+    patch:
+      operationId: >-
+        UserNotificationSettingsController_updateUserNotificationSettingsByUserId
+      summary: Update notifications by user ID
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserNotificationSettingsDto'
+      responses:
+        '200':
+          description: Successfully updated notifications by user ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserNotificationSettingsDto'
+        '404':
+          description: User not found
+      tags:
+        - User notification settings
+  /resources:
+    post:
+      operationId: ResourcesController_createResource
+      summary: Create a new resource
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateResourceDto'
+      responses:
+        '200':
+          description: Successfully created resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateResourceDto'
+      tags:
+        - Resources
+    get:
+      operationId: ResourcesController_findAllCompanyResources
+      summary: Get all resources by company id
+      parameters:
+        - name: companyId
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved all resources.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CreateResourceDto'
+      tags:
+        - Resources
+  /resources/{id}:
+    get:
+      operationId: ResourcesController_findOneResource
+      summary: Get a resource by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateResourceDto'
+        '404':
+          description: Resource not found
+      tags:
+        - Resources
+    patch:
+      operationId: ResourcesController_updateResource
+      summary: Update a resource by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateResourceDto'
+      responses:
+        '200':
+          description: Successfully updated resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateResourceDto'
+        '400':
+          description: Invalid input
+      tags:
+        - Resources
+    delete:
+      operationId: ResourcesController_removeResource
+      summary: Delete a resource by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully deleted resource.
+        '404':
+          description: Resource not found
+      tags:
+        - Resources
+  /resources/default/{companyId}:
+    post:
+      operationId: ResourcesController_createDefaultResourcesForCompany
+      summary: Create default resources for a company
+      parameters:
+        - name: companyId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: industry
+          required: true
+          in: query
+          schema:
+            enum:
+              - Freight Transport Company
+              - Passenger Transport Company
+              - Logistics and Supply Chain Company
+              - Courier and Delivery Service
+              - Moving and Relocation Company
+              - Maritime Shipping Company
+              - Air Cargo Company
+              - Rail Transport Company
+              - Intermodal Transport Company
+              - Public Transport Company
+            type: string
+      responses:
+        '200':
+          description: Successfully created default resources for company.
+      tags:
+        - Resources
   /auth/sign-up:
     post:
       operationId: AuthController_signUp
@@ -378,6 +657,8 @@ paths:
       responses:
         '201':
           description: ''
+      tags:
+        - Auth
   /auth/sign-in:
     post:
       operationId: AuthController_signIn
@@ -391,6 +672,8 @@ paths:
       responses:
         '200':
           description: ''
+      tags:
+        - Auth
   /auth/sign-out:
     post:
       operationId: AuthController_signOut
@@ -398,6 +681,8 @@ paths:
       responses:
         '200':
           description: ''
+      tags:
+        - Auth
   /auth/session:
     get:
       operationId: AuthController_getSessionInfo
@@ -409,6 +694,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetSessionInfoDto'
+      tags:
+        - Auth
   /auth/verify/{token}:
     patch:
       operationId: AuthController_verifyUserAndSetPassword
@@ -421,6 +708,8 @@ paths:
       responses:
         '200':
           description: ''
+      tags:
+        - Auth
   /auth/user/{token}:
     get:
       operationId: AuthController_getUserByToken
@@ -433,6 +722,8 @@ paths:
       responses:
         '200':
           description: ''
+      tags:
+        - Auth
   /users/find-by-email:
     get:
       operationId: UsersController_findByEmail
@@ -578,45 +869,121 @@ paths:
           description: ''
       tags:
         - Users
-  /account:
+  /user-position:
     get:
-      operationId: AccountController_getAccount
-      summary: Get account details
+      operationId: UserPositionController_getUserPosition
+      summary: Get user position
       parameters: []
       responses:
         '200':
-          description: Successfully retrieved account details.
+          description: Successfully retrieved user position.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountDto'
+                $ref: '#/components/schemas/PositionDto'
         '404':
-          description: Account not found
+          description: user position not found
       tags:
-        - Account
-    patch:
-      operationId: AccountController_patchAccount
-      summary: Update account details
+        - User Positions
+    post:
+      operationId: UserPositionController_create
       parameters: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchAccountDto'
+              $ref: '#/components/schemas/CreatePositionDto'
       responses:
-        '200':
-          description: Successfully updated account details.
+        '201':
+          description: Position created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountDto'
+                $ref: '#/components/schemas/PositionDto'
         '400':
-          description: Invalid input
+          description: Invalid input data
       tags:
-        - Account
+        - User Positions
+  /user-position/{id}:
+    patch:
+      operationId: UserPositionController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePositionDto'
+      responses:
+        '200':
+          description: Position updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PositionDto'
+        '404':
+          description: Position not found
+      tags:
+        - User Positions
+    get:
+      operationId: UserPositionController_getPositionByPositionId
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Position retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PositionDto'
+        '404':
+          description: Position not found
+      tags:
+        - User Positions
+    delete:
+      operationId: UserPositionController_delete
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Position deleted successfully
+        '404':
+          description: Position not found
+      tags:
+        - User Positions
+  /user-position/assign:
+    post:
+      operationId: UserPositionController_assignUserToPosition
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignUserToPositionDto'
+      responses:
+        '200':
+          description: User assigned to position successfully
+        '404':
+          description: User or position not found
+      tags:
+        - User Positions
 info:
-  title: Transport company
+  title: Adrevolution
   description: ''
   version: 1.0.0
   contact: {}
@@ -629,15 +996,17 @@ components:
       properties:
         id:
           type: string
-        companyName:
+        name:
           type: string
         phoneNumber:
           type: string
         websiteURL:
           type: string
-        companyEmail:
+        email:
           type: string
         street1:
+          type: string
+        street2:
           type: string
         city:
           type: string
@@ -659,9 +1028,24 @@ components:
           type: string
         firstDayOfWeek:
           type: string
+        teamSize:
+          type: string
+          example: 2-3 people
+        estimatedAnnualRevenue:
+          type: string
+          example: $0 - $50.000
+        topPriority:
+          type: string
+          example: Win more work
+        industry:
+          type: string
+          example: Home Theater
+        heardAboutUs:
+          type: string
+          example: ChatGPT
         displayBusinessHours:
           type: boolean
-          nullable: true
+          example: false
       required:
         - id
     UserDto:
@@ -698,7 +1082,7 @@ components:
     PatchCompanyDto:
       type: object
       properties:
-        companyName:
+        name:
           type: string
           example: NewCompany2
         phoneNumber:
@@ -707,12 +1091,15 @@ components:
         websiteURL:
           type: string
           example: https://example.com
-        companyEmail:
+        email:
           type: string
           example: company@example.com
         street1:
           type: string
           example: 123 Main St
+        street2:
+          type: string
+          example: Route 66
         city:
           type: string
           example: Anytown
@@ -737,11 +1124,6 @@ components:
         firstDayOfWeek:
           type: string
           example: Monday
-    CompanyDetailsDto:
-      type: object
-      properties:
-        id:
-          type: string
         teamSize:
           type: string
           example: 2-3 people
@@ -758,30 +1140,7 @@ components:
           type: string
           example: ChatGPT
         displayBusinessHours:
-          type: string
-          example: false
-      required:
-        - id
-    PatchCompanyDetailsDto:
-      type: object
-      properties:
-        teamSize:
-          type: string
-          example: 2-3 people
-        estimatedAnnualRevenue:
-          type: string
-          example: $0 - $50.000
-        topPriority:
-          type: string
-          example: Win more work
-        industry:
-          type: string
-          example: Home Theater
-        heardAboutUs:
-          type: string
-          example: ChatGPT
-        displayBusinessHours:
-          type: string
+          type: boolean
           example: false
     BusinessHoursDto:
       type: object
@@ -839,31 +1198,175 @@ components:
         sunday:
           type: string
           example: '{"start": "09:00", "end": "17:00", "enabled": false}'
+    CreatePermissionDto:
+      type: object
+      properties:
+        userPositionId:
+          type: string
+        isAdmin:
+          type: boolean
+      required:
+        - userPositionId
+        - isAdmin
     PermissionDto:
       type: object
       properties:
-        isOwner:
-          type: boolean
+        id:
+          type: string
+        userPositionId:
+          type: string
         isAdmin:
           type: boolean
-        level:
-          type: string
       required:
-        - isOwner
+        - id
+        - userPositionId
         - isAdmin
-        - level
-    UpdateLabourCostDto:
+    UpdatePermissionDto:
+      type: object
+      properties:
+        isAdmin:
+          type: boolean
+      required:
+        - isAdmin
+    CreatePaymentTypeDto:
+      type: object
+      properties:
+        labourCost:
+          type: string
+          example: '25.5'
+        costUnit:
+          type: string
+          enum:
+            - PER_HOUR
+            - PER_MONTH
+          example: PER_HOUR
+        userId:
+          type: string
+          example: cuid1234567890
+      required:
+        - userId
+    PaymentTypeDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: cuid1234567890
+        labourCost:
+          type: string
+          example: '30.0'
+        costUnit:
+          type: string
+          enum:
+            - PER_HOUR
+            - PER_MONTH
+          example: PER_HOUR
+        userId:
+          type: string
+          example: cuid1234567890
+      required:
+        - id
+        - costUnit
+        - userId
+    UpdatePaymentTypeDto:
+      type: object
+      properties:
+        labourCost:
+          type: string
+          example: '30.0'
+        costUnit:
+          type: string
+          enum:
+            - PER_HOUR
+            - PER_MONTH
+          example: PER_MONTH
+    UserNotificationSettingsService:
       type: object
       properties: {}
-    LabourCostDto:
+    UserNotificationSettingsDto:
       type: object
-      properties: {}
-    CommunicationDto:
+      properties:
+        id:
+          type: string
+          example: cuid1234567890
+        userId:
+          type: string
+          example: cuid1234567890
+        surveys:
+          type: boolean
+          example: true
+        errorMessages:
+          type: boolean
+          example: true
+      required:
+        - id
+        - userId
+        - surveys
+        - errorMessages
+    UpdateUserNotificationSettingsDto:
       type: object
-      properties: {}
-    UpdateCommunicationDto:
+      properties:
+        surveys:
+          type: boolean
+          example: true
+        errorMessages:
+          type: boolean
+          example: true
+      required:
+        - surveys
+        - errorMessages
+    CreateResourceDto:
       type: object
-      properties: {}
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - TRUCK
+            - CAR
+            - BICYCLE
+            - COMPUTER
+            - VACUUM_MACHINE
+            - SHIP
+            - AIRPLANE
+            - TRAIN
+            - VAN
+            - BUS
+        userId:
+          type: string
+          nullable: true
+        companyId:
+          type: string
+        additionalProperties:
+          type: object
+      required:
+        - name
+        - companyId
+    UpdateResourceDto:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - TRUCK
+            - CAR
+            - BICYCLE
+            - COMPUTER
+            - VACUUM_MACHINE
+            - SHIP
+            - AIRPLANE
+            - TRAIN
+            - VAN
+            - BUS
+        userId:
+          type: string
+          nullable: true
+        companyId:
+          type: string
+        additionalProperties:
+          type: object
     SignUpBodyDto:
       type: object
       properties:
@@ -974,8 +1477,8 @@ components:
           type: string
           example: clxean62l000487898922wqk5
         labourCost:
-          type: number
-          example: 20
+          type: string
+          example: '20'
         costUnit:
           type: string
           enum:
@@ -988,7 +1491,7 @@ components:
         isAdmin:
           type: boolean
           example: false
-        permissionLevel:
+        positionType:
           type: string
           enum:
             - COMPANY_OWNER
@@ -1018,6 +1521,8 @@ components:
         lastName:
           type: string
           example: Zahliadov
+        email:
+          type: string
         streetAddress:
           type: string
           example: 123 Main St
@@ -1056,23 +1561,58 @@ components:
         - token
         - userId
         - createdAt
-    AccountDto:
+    PositionDto:
       type: object
       properties:
         id:
           type: string
-        ownerId:
+        name:
           type: string
-        isBlockingEnabled:
-          type: boolean
+          enum:
+            - COMPANY_OWNER
+            - LIMITED_WORKER
+            - WORKER
+            - DISPATCHER
+            - MANAGER
+            - CUSTOM
       required:
         - id
-        - ownerId
-        - isBlockingEnabled
-    PatchAccountDto:
+        - name
+    CreatePositionDto:
       type: object
       properties:
-        isBlockingEnabled:
-          type: boolean
+        name:
+          type: string
+          enum:
+            - COMPANY_OWNER
+            - LIMITED_WORKER
+            - WORKER
+            - DISPATCHER
+            - MANAGER
+            - CUSTOM
       required:
-        - isBlockingEnabled
+        - name
+    UpdatePositionDto:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+            - COMPANY_OWNER
+            - LIMITED_WORKER
+            - WORKER
+            - DISPATCHER
+            - MANAGER
+            - CUSTOM
+      required:
+        - name
+    AssignUserToPositionDto:
+      type: object
+      properties:
+        userId:
+          type: string
+        positionId:
+          type: string
+      required:
+        - userId
+        - positionId

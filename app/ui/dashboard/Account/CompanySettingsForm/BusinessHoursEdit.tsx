@@ -2,15 +2,15 @@
 
 import { FC, useEffect, useState } from "react";
 import _ from "lodash";
-import {
-  useBusinessHoursUpdate,
-  useGetBusinessHours,
-} from "@/app/lib/queries/businessHours";
 import { BusinessHoursDto } from "@/app/lib/api/generated";
-import { useCompanyDetailsUpdate } from "@/app/lib/hooks/companyDetails/useCompanyDetailsUpdate";
-import { useGetCompanyDetails } from "@/app/lib/queries/companyDetails";
 import { useModal } from "@/app/lib/hooks/useModal";
 import { useSuccessMessage } from "@/app/lib/hooks/useSuccessMessage";
+import {
+  useGetBusinessHours,
+  usePatchBusinessHours,
+} from "@/app/lib/queries/businessHours";
+import { useCompanyUpdate, useGetCompany } from "@/app/lib/queries/company";
+import { get } from "lodash";
 
 interface BusinessHour {
   start: string;
@@ -38,13 +38,15 @@ export const BusinessHoursEdit: FC<IProps> = ({
         members, and request forms.`,
 }) => {
   const [businessHours, setBusinessHours] = useState<BusinessHours>();
-  const { data: businessHoursData } = useGetBusinessHours();
-  const { data: companyDetails } = useGetCompanyDetails();
-  const { handleUpdate: handleUpdateBusinessHours } = useBusinessHoursUpdate();
-  const { handleUpdate: handleUpdateCompanyDetails, isSuccess } =
-    useCompanyDetailsUpdate();
+  const { data: businessHoursData, isSuccess } = useGetBusinessHours();
+  const { handleUpdate: handleUpdateBusinessHours } = usePatchBusinessHours();
+  const { data: company } = useGetCompany();
+  const { handleUpdate: handleCompanyUpdate, isSuccess: companyUpdateSuccess } =
+    useCompanyUpdate();
+
+  const displayBHours = get(company, "displayBusinessHours", false);
   const { openModal, closeModal } = useModal("business-hours-edit");
-  const { showSuccessMessage } = useSuccessMessage(isSuccess);
+  const { showSuccessMessage } = useSuccessMessage(companyUpdateSuccess);
 
   const parseBusinessHours = (data: BusinessHoursDto): BusinessHours => {
     return {
@@ -95,7 +97,7 @@ export const BusinessHoursEdit: FC<IProps> = ({
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = e.target.checked;
-    handleUpdateCompanyDetails({
+    handleCompanyUpdate({
       displayBusinessHours: value,
     });
   };
@@ -210,7 +212,7 @@ export const BusinessHoursEdit: FC<IProps> = ({
             <input
               type="checkbox"
               className="toggle toggle-success"
-              checked={companyDetails?.displayBusinessHours}
+              checked={displayBHours}
               onChange={handleChangeDisplayBusinessHours}
             />
             {showSuccessMessage && (

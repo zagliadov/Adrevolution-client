@@ -1,14 +1,11 @@
-import { useMutation, useQuery, UseQueryResult } from "@tanstack/react-query";
-
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import _ from "lodash";
 import {
   companyControllerGetCompany,
   companyControllerGetUsersOfCompany,
   companyControllerPatchCompany,
-  CompanyDto,
   PatchCompanyDto,
-  UserDto,
 } from "../api/generated";
 
 const companyKey = ["company"];
@@ -37,7 +34,7 @@ export const useCompanyUpdate = () => {
   const { refetch } = useGetCompany();
 
   const companyMutation = useMutation({
-    mutationFn: companyControllerPatchCompany,
+    mutationFn: (data: PatchCompanyDto) => companyControllerPatchCompany(data),
     onSuccess: async () => {
       await refetch();
     },
