@@ -1,20 +1,6 @@
 openapi: 3.0.0
 paths:
   /company:
-    post:
-      operationId: CompanyController_createCompany
-      summary: Create a new company
-      parameters: []
-      responses:
-        '200':
-          description: Successfully created company.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CompanyDto'
-      tags:
-        - Company
-  /company/details:
     get:
       operationId: CompanyController_getCompany
       summary: Get company details
@@ -30,7 +16,41 @@ paths:
           description: Company not found
       tags:
         - Company
-  /company/get-users-of-company/{companyId}:
+    post:
+      operationId: CompanyController_createCompany
+      summary: Create a new company
+      parameters: []
+      responses:
+        '200':
+          description: Successfully created company.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyDto'
+      tags:
+        - Company
+    patch:
+      operationId: CompanyController_patchCompany
+      summary: Update company details
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchCompanyDto'
+      responses:
+        '200':
+          description: Successfully patched company.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyDto'
+        '400':
+          description: Invalid input
+      tags:
+        - Company
+  /company/{companyId}/users:
     get:
       operationId: CompanyController_getUsersOfCompanyById
       summary: Get users of company by company id
@@ -53,7 +73,7 @@ paths:
           description: Company or users not found
       tags:
         - Company
-  /company/get-users-of-company:
+  /company/users:
     get:
       operationId: CompanyController_getUsersOfCompany
       summary: Get users of company
@@ -71,29 +91,7 @@ paths:
           description: Company not found
       tags:
         - Company
-  /company/patch-company:
-    patch:
-      operationId: CompanyController_patchCompany
-      summary: Update company details
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchCompanyDto'
-      responses:
-        '200':
-          description: Successfully patched company.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CompanyDto'
-        '400':
-          description: Invalid input
-      tags:
-        - Company
-  /company/add-user-to-company/{companyId}/{userId}:
+  /company/{companyId}/{userId}:
     patch:
       operationId: CompanyController_addUserToCompany
       summary: Add user to company
@@ -113,7 +111,7 @@ paths:
           description: Successfully added user to company.
       tags:
         - Company
-  /company/get-company-by-id/{companyId}:
+  /company/{companyId}:
     get:
       operationId: CompanyController_getCompanyById
       summary: Get company by ID
@@ -126,14 +124,18 @@ paths:
       responses:
         '200':
           description: Successfully retrieved company by ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyDto'
         '404':
-          description: Company or users not found
+          description: Company not found
       tags:
         - Company
   /company/resources:
     get:
       operationId: CompanyController_getCompanyResources
-      summary: Get company resources
+      summary: Get company resources for current user
       parameters: []
       responses:
         '200':
@@ -141,9 +143,29 @@ paths:
           content:
             application/json:
               schema:
-                type: string
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResourceDto'
         '404':
           description: Resources not found
+      tags:
+        - Company
+  /company/orders:
+    get:
+      operationId: CompanyController_getCompanyOrders
+      summary: Get company orders for current user
+      parameters: []
+      responses:
+        '200':
+          description: Successfully retrieved company orders.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderDto'
+        '404':
+          description: Orders not found
       tags:
         - Company
   /business-hours:
@@ -254,6 +276,7 @@ paths:
   /permissions:
     post:
       operationId: PermissionsController_create
+      summary: Create a new permission
       parameters: []
       requestBody:
         required: true
@@ -262,8 +285,8 @@ paths:
             schema:
               $ref: '#/components/schemas/CreatePermissionDto'
       responses:
-        '201':
-          description: Permission created successfully
+        '200':
+          description: Successfully created permission.
           content:
             application/json:
               schema:
@@ -271,19 +294,20 @@ paths:
         '400':
           description: Invalid input data
       tags:
-        - Permissions
-  /permissions/{userId}:
+        - Permission
+  /permissions/{id}:
     get:
       operationId: PermissionsController_getPermission
+      summary: Get a permission by ID
       parameters:
-        - name: userId
+        - name: id
           required: true
           in: path
           schema:
             type: string
       responses:
         '200':
-          description: Permission retrieved successfully
+          description: Successfully retrieved permission.
           content:
             application/json:
               schema:
@@ -291,10 +315,10 @@ paths:
         '404':
           description: Permission not found
       tags:
-        - Permissions
-  /permissions/{id}:
+        - Permission
     patch:
       operationId: PermissionsController_update
+      summary: Update a permission by ID
       parameters:
         - name: id
           required: true
@@ -309,17 +333,20 @@ paths:
               $ref: '#/components/schemas/UpdatePermissionDto'
       responses:
         '200':
-          description: Permission updated successfully
+          description: Successfully updated permission.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PermissionDto'
+        '400':
+          description: Invalid input
         '404':
           description: Permission not found
       tags:
-        - Permissions
+        - Permission
     delete:
       operationId: PermissionsController_delete
+      summary: Delete a permission by ID
       parameters:
         - name: id
           required: true
@@ -328,14 +355,15 @@ paths:
             type: string
       responses:
         '200':
-          description: Permission deleted successfully
+          description: Successfully deleted permission.
         '404':
           description: Permission not found
       tags:
-        - Permissions
+        - Permission
   /payment-type:
     post:
       operationId: PaymentTypeController_create
+      summary: Create a new payment type
       parameters: []
       requestBody:
         required: true
@@ -345,7 +373,7 @@ paths:
               $ref: '#/components/schemas/CreatePaymentTypeDto'
       responses:
         '201':
-          description: ''
+          description: Successfully created payment type.
           content:
             application/json:
               schema:
@@ -357,6 +385,7 @@ paths:
   /payment-type/{userId}:
     patch:
       operationId: PaymentTypeController_update
+      summary: Update a payment type by user ID
       parameters:
         - name: userId
           required: true
@@ -371,7 +400,7 @@ paths:
               $ref: '#/components/schemas/UpdatePaymentTypeDto'
       responses:
         '200':
-          description: ''
+          description: Successfully updated payment type.
           content:
             application/json:
               schema:
@@ -384,6 +413,7 @@ paths:
         - Payment type
     get:
       operationId: PaymentTypeController_findByUserId
+      summary: Get a payment type by user ID
       parameters:
         - name: userId
           required: true
@@ -392,7 +422,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Successfully retrieved payment type.
           content:
             application/json:
               schema:
@@ -403,6 +433,7 @@ paths:
         - Payment type
     delete:
       operationId: PaymentTypeController_delete
+      summary: Delete a payment type by user ID
       parameters:
         - name: userId
           required: true
@@ -411,7 +442,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Payment Type deleted successfully
+          description: Successfully deleted payment type.
         '404':
           description: Payment Type not found
       tags:
@@ -530,13 +561,15 @@ paths:
                 $ref: '#/components/schemas/CreateResourceDto'
       tags:
         - Resources
+  /resources/{companyId}:
     get:
       operationId: ResourcesController_findAllCompanyResources
       summary: Get all resources by company id
       parameters:
         - name: companyId
           required: true
-          in: query
+          in: path
+          description: The ID of the company
           schema:
             type: string
       responses:
@@ -547,7 +580,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CreateResourceDto'
+                  $ref: '#/components/schemas/ResourceDto'
       tags:
         - Resources
   /resources/{id}:
@@ -644,9 +677,115 @@ paths:
           description: Successfully created default resources for company.
       tags:
         - Resources
+  /orders:
+    post:
+      operationId: OrderController_createOrder
+      summary: Create a new order
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderDto'
+      responses:
+        '200':
+          description: Successfully created order.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderDto'
+      tags:
+        - Order
+  /orders/{id}:
+    get:
+      operationId: OrderController_findOneOrder
+      summary: Get an order by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved order.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderDto'
+        '404':
+          description: Order not found
+      tags:
+        - Order
+    patch:
+      operationId: OrderController_updateOrder
+      summary: Update an order by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrderDto'
+      responses:
+        '200':
+          description: Successfully updated order.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderDto'
+        '400':
+          description: Invalid input
+      tags:
+        - Order
+    delete:
+      operationId: OrderController_removeOrder
+      summary: Delete an order by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully deleted order.
+        '404':
+          description: Order not found
+      tags:
+        - Order
+  /orders/{companyId}:
+    get:
+      operationId: OrderController_findAllCompanyOrders
+      summary: Get all orders for a company
+      parameters:
+        - name: companyId
+          required: true
+          in: path
+          description: The ID of the company
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved all orders for a company.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderDto'
+      tags:
+        - Order
   /auth/sign-up:
     post:
       operationId: AuthController_signUp
+      summary: Sign up a new user
       parameters: []
       requestBody:
         required: true
@@ -656,12 +795,13 @@ paths:
               $ref: '#/components/schemas/SignUpBodyDto'
       responses:
         '201':
-          description: ''
+          description: Successfully signed up a new user.
       tags:
         - Auth
   /auth/sign-in:
     post:
       operationId: AuthController_signIn
+      summary: Sign in an existing user
       parameters: []
       requestBody:
         required: true
@@ -671,25 +811,27 @@ paths:
               $ref: '#/components/schemas/SignInBodyDto'
       responses:
         '200':
-          description: ''
+          description: Successfully signed in the user.
       tags:
         - Auth
   /auth/sign-out:
     post:
       operationId: AuthController_signOut
+      summary: Sign out the current user
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Successfully signed out the user.
       tags:
         - Auth
   /auth/session:
     get:
       operationId: AuthController_getSessionInfo
+      summary: Get session information
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Successfully retrieved session information.
           content:
             application/json:
               schema:
@@ -699,6 +841,7 @@ paths:
   /auth/verify/{token}:
     patch:
       operationId: AuthController_verifyUserAndSetPassword
+      summary: Verify user and set password
       parameters:
         - name: token
           required: true
@@ -707,12 +850,13 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Successfully verified user and set password.
       tags:
         - Auth
   /auth/user/{token}:
     get:
       operationId: AuthController_getUserByToken
+      summary: Get user by verification token
       parameters:
         - name: token
           required: true
@@ -721,17 +865,18 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Successfully retrieved user by token.
       tags:
         - Auth
-  /users/find-by-email:
+  /users/{email}:
     get:
       operationId: UsersController_findByEmail
       summary: Find user by email
       parameters:
         - name: email
           required: true
-          in: query
+          in: path
+          description: The email of the user
           schema:
             type: string
       responses:
@@ -777,10 +922,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PatchUserDto'
+                $ref: '#/components/schemas/UserDto'
       tags:
         - Users
-  /users/get-user-by-id/{userId}:
+  /users/{userId}:
     get:
       operationId: UsersController_getUserById
       summary: Get user by ID
@@ -801,7 +946,23 @@ paths:
           description: User not found
       tags:
         - Users
-  /users/create-new-user-without-password:
+    delete:
+      operationId: UsersController_deleteUser
+      summary: Delete user by ID
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully deleted user.
+        '404':
+          description: User not found
+      tags:
+        - Users
+  /users/without-password:
     post:
       operationId: UsersController_createUserWithoutPassword
       summary: Create new user without password
@@ -817,7 +978,7 @@ paths:
           description: Successfully created new user without password.
       tags:
         - Users
-  /users/find-verification-token/{token}:
+  /users/verification/{token}:
     get:
       operationId: UsersController_findVerificationToken
       summary: Find verification token
@@ -838,7 +999,7 @@ paths:
           description: Verification token not found
       tags:
         - Users
-  /users/update-password/{userId}:
+  /users/password/{userId}:
     patch:
       operationId: UsersController_updateUserPassword
       summary: Update user password
@@ -855,20 +1016,6 @@ paths:
           description: User not found
       tags:
         - Users
-  /users/{userId}:
-    delete:
-      operationId: UsersController_deleteUser
-      parameters:
-        - name: userId
-          required: true
-          in: path
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
-      tags:
-        - Users
   /user-position:
     get:
       operationId: UserPositionController_getUserPosition
@@ -882,11 +1029,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/PositionDto'
         '404':
-          description: user position not found
+          description: User position not found
       tags:
         - User Positions
     post:
       operationId: UserPositionController_create
+      summary: Create a new position
       parameters: []
       requestBody:
         required: true
@@ -908,6 +1056,7 @@ paths:
   /user-position/{id}:
     patch:
       operationId: UserPositionController_update
+      summary: Update a position by ID
       parameters:
         - name: id
           required: true
@@ -933,6 +1082,7 @@ paths:
         - User Positions
     get:
       operationId: UserPositionController_getPositionByPositionId
+      summary: Get position by ID
       parameters:
         - name: id
           required: true
@@ -941,7 +1091,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Position retrieved successfully
+          description: Successfully retrieved position.
           content:
             application/json:
               schema:
@@ -952,6 +1102,7 @@ paths:
         - User Positions
     delete:
       operationId: UserPositionController_delete
+      summary: Delete a position by ID
       parameters:
         - name: id
           required: true
@@ -968,6 +1119,7 @@ paths:
   /user-position/assign:
     post:
       operationId: UserPositionController_assignUserToPosition
+      summary: Assign a user to a position
       parameters: []
       requestBody:
         required: true
@@ -982,6 +1134,212 @@ paths:
           description: User or position not found
       tags:
         - User Positions
+  /order-companies:
+    post:
+      operationId: OrderCompaniesController_createOrderCompany
+      summary: Create a new order company
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderCompaniesDto'
+      responses:
+        '200':
+          description: Successfully created order company.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderCompaniesDto'
+      tags:
+        - Order Companies
+    get:
+      operationId: OrderCompaniesController_findOrderCompanies
+      summary: Get all companies for an order
+      parameters:
+        - name: orderId
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved all companies for an order.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderCompaniesDto'
+      tags:
+        - Order Companies
+  /order-companies/{id}:
+    get:
+      operationId: OrderCompaniesController_findOneOrderCompany
+      summary: Get an order company by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved order company.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderCompaniesDto'
+        '404':
+          description: Order company not found
+      tags:
+        - Order Companies
+    patch:
+      operationId: OrderCompaniesController_updateOrderCompany
+      summary: Update an order company by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrderCompaniesDto'
+      responses:
+        '200':
+          description: Successfully updated order company.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderCompaniesDto'
+        '400':
+          description: Invalid input
+      tags:
+        - Order Companies
+    delete:
+      operationId: OrderCompaniesController_removeOrderCompany
+      summary: Delete an order company by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully deleted order company.
+        '404':
+          description: Order company not found
+      tags:
+        - Order Companies
+  /order-resources:
+    post:
+      operationId: OrderResourcesController_createOrderResource
+      summary: Create a new order resource
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderResourcesDto'
+      responses:
+        '200':
+          description: Successfully created order resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResourcesDto'
+      tags:
+        - Order Resources
+    get:
+      operationId: OrderResourcesController_findOrderResources
+      summary: Get all resources for an order
+      parameters:
+        - name: orderId
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved all resources for an order.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderResourcesDto'
+      tags:
+        - Order Resources
+  /order-resources/{id}:
+    get:
+      operationId: OrderResourcesController_findOneOrderResource
+      summary: Get an order resource by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved order resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResourcesDto'
+        '404':
+          description: Order resource not found
+      tags:
+        - Order Resources
+    patch:
+      operationId: OrderResourcesController_updateOrderResource
+      summary: Update an order resource by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrderResourcesDto'
+      responses:
+        '200':
+          description: Successfully updated order resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResourcesDto'
+        '400':
+          description: Invalid input
+      tags:
+        - Order Resources
+    delete:
+      operationId: OrderResourcesController_removeOrderResource
+      summary: Delete an order resource by ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully deleted order resource.
+        '404':
+          description: Order resource not found
+      tags:
+        - Order Resources
 info:
   title: Adrevolution
   description: ''
@@ -1142,6 +1500,67 @@ components:
         displayBusinessHours:
           type: boolean
           example: false
+    ResourceDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - TRUCK
+            - CAR
+            - BICYCLE
+            - COMPUTER
+            - VACUUM_MACHINE
+            - SHIP
+            - AIRPLANE
+            - TRAIN
+            - VAN
+            - BUS
+        userId:
+          type: string
+          nullable: true
+        companyId:
+          type: string
+        additionalProperties:
+          type: object
+      required:
+        - id
+        - name
+        - type
+        - companyId
+    OrderDto:
+      type: object
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum:
+            - PENDING
+            - IN_PROGRESS
+            - COMPLETED
+            - CANCELLED
+        startAt:
+          type: string
+          format: date-time
+        endAt:
+          type: string
+          format: date-time
+        meta:
+          type: string
+      required:
+        - id
+        - description
+        - status
+        - startAt
+        - endAt
+        - meta
     BusinessHoursDto:
       type: object
       properties:
@@ -1367,6 +1786,51 @@ components:
           type: string
         additionalProperties:
           type: object
+    CreateOrderDto:
+      type: object
+      properties:
+        description:
+          type: string
+        status:
+          type: string
+          enum:
+            - PENDING
+            - IN_PROGRESS
+            - COMPLETED
+            - CANCELLED
+        startAt:
+          type: string
+          format: date-time
+        endAt:
+          type: string
+          format: date-time
+        meta:
+          type: string
+      required:
+        - description
+        - startAt
+        - endAt
+        - meta
+    UpdateOrderDto:
+      type: object
+      properties:
+        description:
+          type: string
+        status:
+          type: string
+          enum:
+            - PENDING
+            - IN_PROGRESS
+            - COMPLETED
+            - CANCELLED
+        startAt:
+          type: string
+          format: date-time
+        endAt:
+          type: string
+          format: date-time
+        meta:
+          type: string
     SignUpBodyDto:
       type: object
       properties:
@@ -1616,3 +2080,103 @@ components:
       required:
         - userId
         - positionId
+    CreateOrderCompaniesDto:
+      type: object
+      properties:
+        orderId:
+          type: string
+          example: cuid2
+          description: The unique identifier of the order
+        contractorCompanyId:
+          type: string
+          example: cuid3
+          description: The unique identifier of the contractor company
+        subcontractorCompanyId:
+          type: string
+          example: cuid4
+          description: The unique identifier of the subcontractor company, if any
+      required:
+        - orderId
+        - contractorCompanyId
+    OrderCompaniesDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: cuid1
+          description: The unique identifier of the order company
+        orderId:
+          type: string
+          example: cuid2
+          description: The unique identifier of the order
+        contractorCompanyId:
+          type: string
+          example: cuid3
+          description: The unique identifier of the contractor company
+        subcontractorCompanyId:
+          type: string
+          example: cuid4
+          description: The unique identifier of the subcontractor company, if any
+      required:
+        - id
+        - orderId
+        - contractorCompanyId
+    UpdateOrderCompaniesDto:
+      type: object
+      properties:
+        orderId:
+          type: string
+          example: cuid2
+          description: The unique identifier of the order
+        contractorCompanyId:
+          type: string
+          example: cuid3
+          description: The unique identifier of the contractor company
+        subcontractorCompanyId:
+          type: string
+          example: cuid4
+          description: The unique identifier of the subcontractor company, if any
+    CreateOrderResourcesDto:
+      type: object
+      properties:
+        orderId:
+          type: string
+          example: cuid2
+          description: The unique identifier of the order
+        resourceId:
+          type: string
+          example: cuid3
+          description: The unique identifier of the resource
+      required:
+        - orderId
+        - resourceId
+    OrderResourcesDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: cuid1
+          description: The unique identifier of the order resource
+        orderId:
+          type: string
+          example: cuid2
+          description: The unique identifier of the order
+        resourceId:
+          type: string
+          example: cuid3
+          description: The unique identifier of the resource
+      required:
+        - id
+        - orderId
+        - resourceId
+    UpdateOrderResourcesDto:
+      type: object
+      properties:
+        orderId:
+          type: string
+          example: cuid2
+          description: The unique identifier of the order
+        resourceId:
+          type: string
+          example: cuid3
+          description: The unique identifier of the resource

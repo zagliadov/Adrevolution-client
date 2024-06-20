@@ -4,83 +4,139 @@
  * Adrevolution
  * OpenAPI spec version: 1.0.0
  */
-import { createInstance } from "./api-instance";
-import type { BodyType } from "./api-instance";
-export type UsersControllerFindByEmailParams = {
-  email: string;
+import { createInstance } from './api-instance';
+import type { BodyType } from './api-instance';
+export type OrderResourcesControllerFindOrderResourcesParams = {
+orderId: string;
 };
 
-export type ResourcesControllerCreateDefaultResourcesForCompanyIndustry =
-  (typeof ResourcesControllerCreateDefaultResourcesForCompanyIndustry)[keyof typeof ResourcesControllerCreateDefaultResourcesForCompanyIndustry];
+export type OrderCompaniesControllerFindOrderCompaniesParams = {
+orderId: string;
+};
 
+export type ResourcesControllerCreateDefaultResourcesForCompanyIndustry = typeof ResourcesControllerCreateDefaultResourcesForCompanyIndustry[keyof typeof ResourcesControllerCreateDefaultResourcesForCompanyIndustry];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ResourcesControllerCreateDefaultResourcesForCompanyIndustry = {
-  Freight_Transport_Company: "Freight Transport Company",
-  Passenger_Transport_Company: "Passenger Transport Company",
-  Logistics_and_Supply_Chain_Company: "Logistics and Supply Chain Company",
-  Courier_and_Delivery_Service: "Courier and Delivery Service",
-  Moving_and_Relocation_Company: "Moving and Relocation Company",
-  Maritime_Shipping_Company: "Maritime Shipping Company",
-  Air_Cargo_Company: "Air Cargo Company",
-  Rail_Transport_Company: "Rail Transport Company",
-  Intermodal_Transport_Company: "Intermodal Transport Company",
-  Public_Transport_Company: "Public Transport Company",
+  Freight_Transport_Company: 'Freight Transport Company',
+  Passenger_Transport_Company: 'Passenger Transport Company',
+  Logistics_and_Supply_Chain_Company: 'Logistics and Supply Chain Company',
+  Courier_and_Delivery_Service: 'Courier and Delivery Service',
+  Moving_and_Relocation_Company: 'Moving and Relocation Company',
+  Maritime_Shipping_Company: 'Maritime Shipping Company',
+  Air_Cargo_Company: 'Air Cargo Company',
+  Rail_Transport_Company: 'Rail Transport Company',
+  Intermodal_Transport_Company: 'Intermodal Transport Company',
+  Public_Transport_Company: 'Public Transport Company',
 } as const;
 
 export type ResourcesControllerCreateDefaultResourcesForCompanyParams = {
-  industry: ResourcesControllerCreateDefaultResourcesForCompanyIndustry;
+industry: ResourcesControllerCreateDefaultResourcesForCompanyIndustry;
 };
 
-export type ResourcesControllerFindAllCompanyResourcesParams = {
-  companyId: string;
-};
+export interface UpdateOrderResourcesDto {
+  /** The unique identifier of the order */
+  orderId?: string;
+  /** The unique identifier of the resource */
+  resourceId?: string;
+}
+
+export interface OrderResourcesDto {
+  /** The unique identifier of the order resource */
+  id: string;
+  /** The unique identifier of the order */
+  orderId: string;
+  /** The unique identifier of the resource */
+  resourceId: string;
+}
+
+export interface CreateOrderResourcesDto {
+  /** The unique identifier of the order */
+  orderId: string;
+  /** The unique identifier of the resource */
+  resourceId: string;
+}
+
+export interface UpdateOrderCompaniesDto {
+  /** The unique identifier of the contractor company */
+  contractorCompanyId?: string;
+  /** The unique identifier of the order */
+  orderId?: string;
+  /** The unique identifier of the subcontractor company, if any */
+  subcontractorCompanyId?: string;
+}
+
+export interface OrderCompaniesDto {
+  /** The unique identifier of the contractor company */
+  contractorCompanyId: string;
+  /** The unique identifier of the order company */
+  id: string;
+  /** The unique identifier of the order */
+  orderId: string;
+  /** The unique identifier of the subcontractor company, if any */
+  subcontractorCompanyId?: string;
+}
+
+export interface CreateOrderCompaniesDto {
+  /** The unique identifier of the contractor company */
+  contractorCompanyId: string;
+  /** The unique identifier of the order */
+  orderId: string;
+  /** The unique identifier of the subcontractor company, if any */
+  subcontractorCompanyId?: string;
+}
 
 export interface AssignUserToPositionDto {
   positionId: string;
   userId: string;
 }
 
-export type UpdatePositionDtoName =
-  (typeof UpdatePositionDtoName)[keyof typeof UpdatePositionDtoName];
+export type UpdatePositionDtoName = typeof UpdatePositionDtoName[keyof typeof UpdatePositionDtoName];
 
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const UpdatePositionDtoName = {
-  COMPANY_OWNER: "COMPANY_OWNER",
-  LIMITED_WORKER: "LIMITED_WORKER",
-  WORKER: "WORKER",
-  DISPATCHER: "DISPATCHER",
-  MANAGER: "MANAGER",
-  CUSTOM: "CUSTOM",
+  COMPANY_OWNER: 'COMPANY_OWNER',
+  LIMITED_WORKER: 'LIMITED_WORKER',
+  WORKER: 'WORKER',
+  DISPATCHER: 'DISPATCHER',
+  MANAGER: 'MANAGER',
+  CUSTOM: 'CUSTOM',
 } as const;
 
 export interface UpdatePositionDto {
   name: UpdatePositionDtoName;
 }
 
-export type CreatePositionDtoName =
-  (typeof CreatePositionDtoName)[keyof typeof CreatePositionDtoName];
+export type CreatePositionDtoName = typeof CreatePositionDtoName[keyof typeof CreatePositionDtoName];
 
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CreatePositionDtoName = {
-  COMPANY_OWNER: "COMPANY_OWNER",
-  LIMITED_WORKER: "LIMITED_WORKER",
-  WORKER: "WORKER",
-  DISPATCHER: "DISPATCHER",
-  MANAGER: "MANAGER",
-  CUSTOM: "CUSTOM",
+  COMPANY_OWNER: 'COMPANY_OWNER',
+  LIMITED_WORKER: 'LIMITED_WORKER',
+  WORKER: 'WORKER',
+  DISPATCHER: 'DISPATCHER',
+  MANAGER: 'MANAGER',
+  CUSTOM: 'CUSTOM',
 } as const;
 
 export interface CreatePositionDto {
   name: CreatePositionDtoName;
 }
 
-export type PositionDtoName =
-  (typeof PositionDtoName)[keyof typeof PositionDtoName];
+export type PositionDtoName = typeof PositionDtoName[keyof typeof PositionDtoName];
 
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PositionDtoName = {
-  COMPANY_OWNER: "COMPANY_OWNER",
-  LIMITED_WORKER: "LIMITED_WORKER",
-  WORKER: "WORKER",
-  DISPATCHER: "DISPATCHER",
-  MANAGER: "MANAGER",
-  CUSTOM: "CUSTOM",
+  COMPANY_OWNER: 'COMPANY_OWNER',
+  LIMITED_WORKER: 'LIMITED_WORKER',
+  WORKER: 'WORKER',
+  DISPATCHER: 'DISPATCHER',
+  MANAGER: 'MANAGER',
+  CUSTOM: 'CUSTOM',
 } as const;
 
 export interface PositionDto {
@@ -107,24 +163,26 @@ export interface PatchUserDto {
   streetAddress?: string;
 }
 
-export type UserWithoutPasswordPositionType =
-  (typeof UserWithoutPasswordPositionType)[keyof typeof UserWithoutPasswordPositionType];
+export type UserWithoutPasswordPositionType = typeof UserWithoutPasswordPositionType[keyof typeof UserWithoutPasswordPositionType];
 
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const UserWithoutPasswordPositionType = {
-  COMPANY_OWNER: "COMPANY_OWNER",
-  LIMITED_WORKER: "LIMITED_WORKER",
-  WORKER: "WORKER",
-  DISPATCHER: "DISPATCHER",
-  MANAGER: "MANAGER",
-  CUSTOM: "CUSTOM",
+  COMPANY_OWNER: 'COMPANY_OWNER',
+  LIMITED_WORKER: 'LIMITED_WORKER',
+  WORKER: 'WORKER',
+  DISPATCHER: 'DISPATCHER',
+  MANAGER: 'MANAGER',
+  CUSTOM: 'CUSTOM',
 } as const;
 
-export type UserWithoutPasswordCostUnit =
-  (typeof UserWithoutPasswordCostUnit)[keyof typeof UserWithoutPasswordCostUnit];
+export type UserWithoutPasswordCostUnit = typeof UserWithoutPasswordCostUnit[keyof typeof UserWithoutPasswordCostUnit];
 
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const UserWithoutPasswordCostUnit = {
-  PER_HOUR: "PER_HOUR",
-  PER_MONTH: "PER_MONTH",
+  PER_HOUR: 'PER_HOUR',
+  PER_MONTH: 'PER_MONTH',
 } as const;
 
 export interface UserWithoutPassword {
@@ -181,20 +239,59 @@ export interface SignUpBodyDto {
   password: string;
 }
 
-export type UpdateResourceDtoType =
-  (typeof UpdateResourceDtoType)[keyof typeof UpdateResourceDtoType];
+export type UpdateOrderDtoStatus = typeof UpdateOrderDtoStatus[keyof typeof UpdateOrderDtoStatus];
 
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const UpdateOrderDtoStatus = {
+  PENDING: 'PENDING',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED',
+} as const;
+
+export interface UpdateOrderDto {
+  description?: string;
+  endAt?: string;
+  meta?: string;
+  startAt?: string;
+  status?: UpdateOrderDtoStatus;
+}
+
+export type CreateOrderDtoStatus = typeof CreateOrderDtoStatus[keyof typeof CreateOrderDtoStatus];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const CreateOrderDtoStatus = {
+  PENDING: 'PENDING',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED',
+} as const;
+
+export interface CreateOrderDto {
+  description: string;
+  endAt: string;
+  meta: string;
+  startAt: string;
+  status?: CreateOrderDtoStatus;
+}
+
+export type UpdateResourceDtoType = typeof UpdateResourceDtoType[keyof typeof UpdateResourceDtoType];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const UpdateResourceDtoType = {
-  TRUCK: "TRUCK",
-  CAR: "CAR",
-  BICYCLE: "BICYCLE",
-  COMPUTER: "COMPUTER",
-  VACUUM_MACHINE: "VACUUM_MACHINE",
-  SHIP: "SHIP",
-  AIRPLANE: "AIRPLANE",
-  TRAIN: "TRAIN",
-  VAN: "VAN",
-  BUS: "BUS",
+  TRUCK: 'TRUCK',
+  CAR: 'CAR',
+  BICYCLE: 'BICYCLE',
+  COMPUTER: 'COMPUTER',
+  VACUUM_MACHINE: 'VACUUM_MACHINE',
+  SHIP: 'SHIP',
+  AIRPLANE: 'AIRPLANE',
+  TRAIN: 'TRAIN',
+  VAN: 'VAN',
+  BUS: 'BUS',
 } as const;
 
 export type UpdateResourceDtoAdditionalProperties = { [key: string]: any };
@@ -208,20 +305,21 @@ export interface UpdateResourceDto {
   userId?: string | null;
 }
 
-export type CreateResourceDtoType =
-  (typeof CreateResourceDtoType)[keyof typeof CreateResourceDtoType];
+export type CreateResourceDtoType = typeof CreateResourceDtoType[keyof typeof CreateResourceDtoType];
 
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CreateResourceDtoType = {
-  TRUCK: "TRUCK",
-  CAR: "CAR",
-  BICYCLE: "BICYCLE",
-  COMPUTER: "COMPUTER",
-  VACUUM_MACHINE: "VACUUM_MACHINE",
-  SHIP: "SHIP",
-  AIRPLANE: "AIRPLANE",
-  TRAIN: "TRAIN",
-  VAN: "VAN",
-  BUS: "BUS",
+  TRUCK: 'TRUCK',
+  CAR: 'CAR',
+  BICYCLE: 'BICYCLE',
+  COMPUTER: 'COMPUTER',
+  VACUUM_MACHINE: 'VACUUM_MACHINE',
+  SHIP: 'SHIP',
+  AIRPLANE: 'AIRPLANE',
+  TRAIN: 'TRAIN',
+  VAN: 'VAN',
+  BUS: 'BUS',
 } as const;
 
 export type CreateResourceDtoAdditionalProperties = { [key: string]: any };
@@ -247,16 +345,15 @@ export interface UserNotificationSettingsDto {
   userId: string;
 }
 
-export interface UserNotificationSettingsService {
-  [key: string]: any;
-}
+export interface UserNotificationSettingsService { [key: string]: any }
 
-export type UpdatePaymentTypeDtoCostUnit =
-  (typeof UpdatePaymentTypeDtoCostUnit)[keyof typeof UpdatePaymentTypeDtoCostUnit];
+export type UpdatePaymentTypeDtoCostUnit = typeof UpdatePaymentTypeDtoCostUnit[keyof typeof UpdatePaymentTypeDtoCostUnit];
 
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const UpdatePaymentTypeDtoCostUnit = {
-  PER_HOUR: "PER_HOUR",
-  PER_MONTH: "PER_MONTH",
+  PER_HOUR: 'PER_HOUR',
+  PER_MONTH: 'PER_MONTH',
 } as const;
 
 export interface UpdatePaymentTypeDto {
@@ -264,12 +361,13 @@ export interface UpdatePaymentTypeDto {
   labourCost?: string;
 }
 
-export type PaymentTypeDtoCostUnit =
-  (typeof PaymentTypeDtoCostUnit)[keyof typeof PaymentTypeDtoCostUnit];
+export type PaymentTypeDtoCostUnit = typeof PaymentTypeDtoCostUnit[keyof typeof PaymentTypeDtoCostUnit];
 
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PaymentTypeDtoCostUnit = {
-  PER_HOUR: "PER_HOUR",
-  PER_MONTH: "PER_MONTH",
+  PER_HOUR: 'PER_HOUR',
+  PER_MONTH: 'PER_MONTH',
 } as const;
 
 export interface PaymentTypeDto {
@@ -279,12 +377,13 @@ export interface PaymentTypeDto {
   userId: string;
 }
 
-export type CreatePaymentTypeDtoCostUnit =
-  (typeof CreatePaymentTypeDtoCostUnit)[keyof typeof CreatePaymentTypeDtoCostUnit];
+export type CreatePaymentTypeDtoCostUnit = typeof CreatePaymentTypeDtoCostUnit[keyof typeof CreatePaymentTypeDtoCostUnit];
 
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CreatePaymentTypeDtoCostUnit = {
-  PER_HOUR: "PER_HOUR",
-  PER_MONTH: "PER_MONTH",
+  PER_HOUR: 'PER_HOUR',
+  PER_MONTH: 'PER_MONTH',
 } as const;
 
 export interface CreatePaymentTypeDto {
@@ -326,6 +425,55 @@ export interface BusinessHoursDto {
   thursday: string;
   tuesday: string;
   wednesday: string;
+}
+
+export type OrderDtoStatus = typeof OrderDtoStatus[keyof typeof OrderDtoStatus];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const OrderDtoStatus = {
+  PENDING: 'PENDING',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED',
+} as const;
+
+export interface OrderDto {
+  description: string;
+  endAt: string;
+  id: string;
+  meta: string;
+  startAt: string;
+  status: OrderDtoStatus;
+}
+
+export type ResourceDtoType = typeof ResourceDtoType[keyof typeof ResourceDtoType];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const ResourceDtoType = {
+  TRUCK: 'TRUCK',
+  CAR: 'CAR',
+  BICYCLE: 'BICYCLE',
+  COMPUTER: 'COMPUTER',
+  VACUUM_MACHINE: 'VACUUM_MACHINE',
+  SHIP: 'SHIP',
+  AIRPLANE: 'AIRPLANE',
+  TRAIN: 'TRAIN',
+  VAN: 'VAN',
+  BUS: 'BUS',
+} as const;
+
+export type ResourceDtoAdditionalProperties = { [key: string]: any };
+
+export interface ResourceDto {
+  additionalProperties?: ResourceDtoAdditionalProperties;
+  companyId: string;
+  id: string;
+  name: string;
+  type: ResourceDtoType;
+  /** @nullable */
+  userId?: string | null;
 }
 
 export interface PatchCompanyDto {
@@ -392,896 +540,957 @@ export interface CompanyDto {
   websiteURL?: string;
 }
 
+
+
+
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
 
+
+  /**
+ * @summary Get company details
+ */
+export const companyControllerGetCompany = (
+    
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<CompanyDto>(
+      {url: `/company`, method: 'GET'
+    },
+      options);
+    }
+  
 /**
  * @summary Create a new company
  */
 export const companyControllerCreateCompany = (
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<CompanyDto>(
-    { url: `/company`, method: "POST" },
-    options
-  );
-};
-
-/**
- * @summary Get company details
- */
-export const companyControllerGetCompany = (
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<CompanyDto>(
-    { url: `/company/details`, method: "GET" },
-    options
-  );
-};
-
-/**
- * @summary Get users of company by company id
- */
-export const companyControllerGetUsersOfCompanyById = (
-  companyId: string,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<UserDto[]>(
-    { url: `/company/get-users-of-company/${companyId}`, method: "GET" },
-    options
-  );
-};
-
-/**
- * @summary Get users of company
- */
-export const companyControllerGetUsersOfCompany = (
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<UserDto[]>(
-    { url: `/company/get-users-of-company`, method: "GET" },
-    options
-  );
-};
-
+    
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<CompanyDto>(
+      {url: `/company`, method: 'POST'
+    },
+      options);
+    }
+  
 /**
  * @summary Update company details
  */
 export const companyControllerPatchCompany = (
-  patchCompanyDto: BodyType<PatchCompanyDto>,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<CompanyDto>(
-    {
-      url: `/company/patch-company`,
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      data: patchCompanyDto,
+    patchCompanyDto: BodyType<PatchCompanyDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<CompanyDto>(
+      {url: `/company`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: patchCompanyDto
     },
-    options
-  );
-};
-
+      options);
+    }
+  
+/**
+ * @summary Get users of company by company id
+ */
+export const companyControllerGetUsersOfCompanyById = (
+    companyId: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<UserDto[]>(
+      {url: `/company/${companyId}/users`, method: 'GET'
+    },
+      options);
+    }
+  
+/**
+ * @summary Get users of company
+ */
+export const companyControllerGetUsersOfCompany = (
+    
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<UserDto[]>(
+      {url: `/company/users`, method: 'GET'
+    },
+      options);
+    }
+  
 /**
  * @summary Add user to company
  */
 export const companyControllerAddUserToCompany = (
-  companyId: string,
-  userId: string,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<void>(
-    {
-      url: `/company/add-user-to-company/${companyId}/${userId}`,
-      method: "PATCH",
+    companyId: string,
+    userId: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<void>(
+      {url: `/company/${companyId}/${userId}`, method: 'PATCH'
     },
-    options
-  );
-};
-
+      options);
+    }
+  
 /**
  * @summary Get company by ID
  */
 export const companyControllerGetCompanyById = (
-  companyId: string,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<void>(
-    { url: `/company/get-company-by-id/${companyId}`, method: "GET" },
-    options
-  );
-};
-
+    companyId: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<CompanyDto>(
+      {url: `/company/${companyId}`, method: 'GET'
+    },
+      options);
+    }
+  
 /**
- * @summary Get company resources
+ * @summary Get company resources for current user
  */
 export const companyControllerGetCompanyResources = (
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<string>(
-    { url: `/company/resources`, method: "GET" },
-    options
-  );
-};
-
+    
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<ResourceDto[]>(
+      {url: `/company/resources`, method: 'GET'
+    },
+      options);
+    }
+  
+/**
+ * @summary Get company orders for current user
+ */
+export const companyControllerGetCompanyOrders = (
+    
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<OrderDto[]>(
+      {url: `/company/orders`, method: 'GET'
+    },
+      options);
+    }
+  
 /**
  * @summary Create business hours
  */
 export const businessHoursControllerCreateBusinessHours = (
-  businessHoursDto: BodyType<BusinessHoursDto>,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<BusinessHoursDto>(
-    {
-      url: `/business-hours`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      data: businessHoursDto,
+    businessHoursDto: BodyType<BusinessHoursDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<BusinessHoursDto>(
+      {url: `/business-hours`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: businessHoursDto
     },
-    options
-  );
-};
-
+      options);
+    }
+  
 /**
  * @summary Get business hours
  */
 export const businessHoursControllerGetBusinessHours = (
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<BusinessHoursDto>(
-    { url: `/business-hours`, method: "GET" },
-    options
-  );
-};
-
+    
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<BusinessHoursDto>(
+      {url: `/business-hours`, method: 'GET'
+    },
+      options);
+    }
+  
 /**
  * @summary Update business hours
  */
 export const businessHoursControllerPatchBusinessHours = (
-  patchBusinessHoursDto: BodyType<PatchBusinessHoursDto>,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<BusinessHoursDto>(
-    {
-      url: `/business-hours`,
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      data: patchBusinessHoursDto,
+    patchBusinessHoursDto: BodyType<PatchBusinessHoursDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<BusinessHoursDto>(
+      {url: `/business-hours`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: patchBusinessHoursDto
     },
-    options
-  );
-};
-
+      options);
+    }
+  
 /**
  * @summary Get business hours by user ID
  */
 export const businessHoursControllerGetBusinessHoursByUserId = (
-  userId: string,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<BusinessHoursDto>(
-    { url: `/business-hours/${userId}`, method: "GET" },
-    options
-  );
-};
-
+    userId: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<BusinessHoursDto>(
+      {url: `/business-hours/${userId}`, method: 'GET'
+    },
+      options);
+    }
+  
 /**
  * @summary Patch business hours by user ID
  */
 export const businessHoursControllerPatchBusinessHoursById = (
-  userId: string,
-  patchBusinessHoursDto: BodyType<PatchBusinessHoursDto>,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<BusinessHoursDto>(
-    {
-      url: `/business-hours/${userId}`,
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      data: patchBusinessHoursDto,
+    userId: string,
+    patchBusinessHoursDto: BodyType<PatchBusinessHoursDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<BusinessHoursDto>(
+      {url: `/business-hours/${userId}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: patchBusinessHoursDto
     },
-    options
-  );
-};
-
+      options);
+    }
+  
+/**
+ * @summary Create a new permission
+ */
 export const permissionsControllerCreate = (
-  createPermissionDto: BodyType<CreatePermissionDto>,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<PermissionDto>(
-    {
-      url: `/permissions`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      data: createPermissionDto,
+    createPermissionDto: BodyType<CreatePermissionDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<PermissionDto>(
+      {url: `/permissions`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createPermissionDto
     },
-    options
-  );
-};
-
+      options);
+    }
+  
+/**
+ * @summary Get a permission by ID
+ */
 export const permissionsControllerGetPermission = (
-  userId: string,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<PermissionDto>(
-    { url: `/permissions/${userId}`, method: "GET" },
-    options
-  );
-};
-
+    id: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<PermissionDto>(
+      {url: `/permissions/${id}`, method: 'GET'
+    },
+      options);
+    }
+  
+/**
+ * @summary Update a permission by ID
+ */
 export const permissionsControllerUpdate = (
-  id: string,
-  updatePermissionDto: BodyType<UpdatePermissionDto>,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<PermissionDto>(
-    {
-      url: `/permissions/${id}`,
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      data: updatePermissionDto,
+    id: string,
+    updatePermissionDto: BodyType<UpdatePermissionDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<PermissionDto>(
+      {url: `/permissions/${id}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updatePermissionDto
     },
-    options
-  );
-};
-
+      options);
+    }
+  
+/**
+ * @summary Delete a permission by ID
+ */
 export const permissionsControllerDelete = (
-  id: string,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<void>(
-    { url: `/permissions/${id}`, method: "DELETE" },
-    options
-  );
-};
-
+    id: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<void>(
+      {url: `/permissions/${id}`, method: 'DELETE'
+    },
+      options);
+    }
+  
+/**
+ * @summary Create a new payment type
+ */
 export const paymentTypeControllerCreate = (
-  createPaymentTypeDto: BodyType<CreatePaymentTypeDto>,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<PaymentTypeDto>(
-    {
-      url: `/payment-type`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      data: createPaymentTypeDto,
+    createPaymentTypeDto: BodyType<CreatePaymentTypeDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<PaymentTypeDto>(
+      {url: `/payment-type`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createPaymentTypeDto
     },
-    options
-  );
-};
-
+      options);
+    }
+  
+/**
+ * @summary Update a payment type by user ID
+ */
 export const paymentTypeControllerUpdate = (
-  userId: string,
-  updatePaymentTypeDto: BodyType<UpdatePaymentTypeDto>,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<PaymentTypeDto>(
-    {
-      url: `/payment-type/${userId}`,
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      data: updatePaymentTypeDto,
+    userId: string,
+    updatePaymentTypeDto: BodyType<UpdatePaymentTypeDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<PaymentTypeDto>(
+      {url: `/payment-type/${userId}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updatePaymentTypeDto
     },
-    options
-  );
-};
-
+      options);
+    }
+  
+/**
+ * @summary Get a payment type by user ID
+ */
 export const paymentTypeControllerFindByUserId = (
-  userId: string,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<PaymentTypeDto>(
-    { url: `/payment-type/${userId}`, method: "GET" },
-    options
-  );
-};
-
+    userId: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<PaymentTypeDto>(
+      {url: `/payment-type/${userId}`, method: 'GET'
+    },
+      options);
+    }
+  
+/**
+ * @summary Delete a payment type by user ID
+ */
 export const paymentTypeControllerDelete = (
-  userId: string,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<void>(
-    { url: `/payment-type/${userId}`, method: "DELETE" },
-    options
-  );
-};
-
+    userId: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<void>(
+      {url: `/payment-type/${userId}`, method: 'DELETE'
+    },
+      options);
+    }
+  
 /**
  * @summary Create user notifications
  */
-export const userNotificationSettingsControllerCreateUserNotificationSettings =
-  (options?: SecondParameter<typeof createInstance>) => {
-    return createInstance<UserNotificationSettingsService>(
-      { url: `/user-notification-settings`, method: "POST" },
-      options
-    );
-  };
-
+export const userNotificationSettingsControllerCreateUserNotificationSettings = (
+    
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<UserNotificationSettingsService>(
+      {url: `/user-notification-settings`, method: 'POST'
+    },
+      options);
+    }
+  
 /**
  * @summary Get user notifications
  */
 export const userNotificationSettingsControllerGetUserNotificationSettings = (
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<UserNotificationSettingsDto>(
-    { url: `/user-notification-settings`, method: "GET" },
-    options
-  );
-};
-
+    
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<UserNotificationSettingsDto>(
+      {url: `/user-notification-settings`, method: 'GET'
+    },
+      options);
+    }
+  
 /**
  * @summary Update user notifications
  */
-export const userNotificationSettingsControllerUpdateUserNotificationSettings =
-  (
+export const userNotificationSettingsControllerUpdateUserNotificationSettings = (
     updateUserNotificationSettingsDto: BodyType<UpdateUserNotificationSettingsDto>,
-    options?: SecondParameter<typeof createInstance>
-  ) => {
-    return createInstance<UserNotificationSettingsDto>(
-      {
-        url: `/user-notification-settings`,
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        data: updateUserNotificationSettingsDto,
-      },
-      options
-    );
-  };
-
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<UserNotificationSettingsDto>(
+      {url: `/user-notification-settings`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updateUserNotificationSettingsDto
+    },
+      options);
+    }
+  
 /**
  * @summary Get notifications by user ID
  */
-export const userNotificationSettingsControllerGetUserNotificationSettingsByUserId =
-  (userId: string, options?: SecondParameter<typeof createInstance>) => {
-    return createInstance<UserNotificationSettingsDto>(
-      { url: `/user-notification-settings/user/${userId}`, method: "GET" },
-      options
-    );
-  };
-
+export const userNotificationSettingsControllerGetUserNotificationSettingsByUserId = (
+    userId: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<UserNotificationSettingsDto>(
+      {url: `/user-notification-settings/user/${userId}`, method: 'GET'
+    },
+      options);
+    }
+  
 /**
  * @summary Update notifications by user ID
  */
-export const userNotificationSettingsControllerUpdateUserNotificationSettingsByUserId =
-  (
+export const userNotificationSettingsControllerUpdateUserNotificationSettingsByUserId = (
     userId: string,
     updateUserNotificationSettingsDto: BodyType<UpdateUserNotificationSettingsDto>,
-    options?: SecondParameter<typeof createInstance>
-  ) => {
-    return createInstance<UserNotificationSettingsDto>(
-      {
-        url: `/user-notification-settings/user/${userId}`,
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        data: updateUserNotificationSettingsDto,
-      },
-      options
-    );
-  };
-
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<UserNotificationSettingsDto>(
+      {url: `/user-notification-settings/user/${userId}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updateUserNotificationSettingsDto
+    },
+      options);
+    }
+  
 /**
  * @summary Create a new resource
  */
 export const resourcesControllerCreateResource = (
-  createResourceDto: BodyType<CreateResourceDto>,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<CreateResourceDto>(
-    {
-      url: `/resources`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      data: createResourceDto,
+    createResourceDto: BodyType<CreateResourceDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<CreateResourceDto>(
+      {url: `/resources`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createResourceDto
     },
-    options
-  );
-};
-
+      options);
+    }
+  
 /**
  * @summary Get all resources by company id
  */
 export const resourcesControllerFindAllCompanyResources = (
-  params: ResourcesControllerFindAllCompanyResourcesParams,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<CreateResourceDto[]>(
-    { url: `/resources`, method: "GET", params },
-    options
-  );
-};
-
+    companyId: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<ResourceDto[]>(
+      {url: `/resources/${companyId}`, method: 'GET'
+    },
+      options);
+    }
+  
 /**
  * @summary Get a resource by ID
  */
 export const resourcesControllerFindOneResource = (
-  id: string,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<CreateResourceDto>(
-    { url: `/resources/${id}`, method: "GET" },
-    options
-  );
-};
-
+    id: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<CreateResourceDto>(
+      {url: `/resources/${id}`, method: 'GET'
+    },
+      options);
+    }
+  
 /**
  * @summary Update a resource by ID
  */
 export const resourcesControllerUpdateResource = (
-  id: string,
-  updateResourceDto: BodyType<UpdateResourceDto>,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<CreateResourceDto>(
-    {
-      url: `/resources/${id}`,
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      data: updateResourceDto,
+    id: string,
+    updateResourceDto: BodyType<UpdateResourceDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<CreateResourceDto>(
+      {url: `/resources/${id}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updateResourceDto
     },
-    options
-  );
-};
-
+      options);
+    }
+  
 /**
  * @summary Delete a resource by ID
  */
 export const resourcesControllerRemoveResource = (
-  id: string,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<void>(
-    { url: `/resources/${id}`, method: "DELETE" },
-    options
-  );
-};
-
+    id: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<void>(
+      {url: `/resources/${id}`, method: 'DELETE'
+    },
+      options);
+    }
+  
 /**
  * @summary Create default resources for a company
  */
 export const resourcesControllerCreateDefaultResourcesForCompany = (
-  companyId: string,
-  params: ResourcesControllerCreateDefaultResourcesForCompanyParams,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<void>(
-    { url: `/resources/default/${companyId}`, method: "POST", params },
-    options
-  );
-};
-
+    companyId: string,
+    params: ResourcesControllerCreateDefaultResourcesForCompanyParams,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<void>(
+      {url: `/resources/default/${companyId}`, method: 'POST',
+        params
+    },
+      options);
+    }
+  
+/**
+ * @summary Create a new order
+ */
+export const orderControllerCreateOrder = (
+    createOrderDto: BodyType<CreateOrderDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<OrderDto>(
+      {url: `/orders`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createOrderDto
+    },
+      options);
+    }
+  
+/**
+ * @summary Get an order by ID
+ */
+export const orderControllerFindOneOrder = (
+    id: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<OrderDto>(
+      {url: `/orders/${id}`, method: 'GET'
+    },
+      options);
+    }
+  
+/**
+ * @summary Update an order by ID
+ */
+export const orderControllerUpdateOrder = (
+    id: string,
+    updateOrderDto: BodyType<UpdateOrderDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<OrderDto>(
+      {url: `/orders/${id}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updateOrderDto
+    },
+      options);
+    }
+  
+/**
+ * @summary Delete an order by ID
+ */
+export const orderControllerRemoveOrder = (
+    id: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<void>(
+      {url: `/orders/${id}`, method: 'DELETE'
+    },
+      options);
+    }
+  
+/**
+ * @summary Get all orders for a company
+ */
+export const orderControllerFindAllCompanyOrders = (
+    companyId: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<OrderDto[]>(
+      {url: `/orders/${companyId}`, method: 'GET'
+    },
+      options);
+    }
+  
+/**
+ * @summary Sign up a new user
+ */
 export const authControllerSignUp = (
-  signUpBodyDto: BodyType<SignUpBodyDto>,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<void>(
-    {
-      url: `/auth/sign-up`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      data: signUpBodyDto,
+    signUpBodyDto: BodyType<SignUpBodyDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<void>(
+      {url: `/auth/sign-up`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: signUpBodyDto
     },
-    options
-  );
-};
-
+      options);
+    }
+  
+/**
+ * @summary Sign in an existing user
+ */
 export const authControllerSignIn = (
-  signInBodyDto: BodyType<SignInBodyDto>,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<void>(
-    {
-      url: `/auth/sign-in`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      data: signInBodyDto,
+    signInBodyDto: BodyType<SignInBodyDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<void>(
+      {url: `/auth/sign-in`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: signInBodyDto
     },
-    options
-  );
-};
-
+      options);
+    }
+  
+/**
+ * @summary Sign out the current user
+ */
 export const authControllerSignOut = (
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<void>(
-    { url: `/auth/sign-out`, method: "POST" },
-    options
-  );
-};
-
+    
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<void>(
+      {url: `/auth/sign-out`, method: 'POST'
+    },
+      options);
+    }
+  
+/**
+ * @summary Get session information
+ */
 export const authControllerGetSessionInfo = (
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<GetSessionInfoDto>(
-    { url: `/auth/session`, method: "GET" },
-    options
-  );
-};
-
+    
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<GetSessionInfoDto>(
+      {url: `/auth/session`, method: 'GET'
+    },
+      options);
+    }
+  
+/**
+ * @summary Verify user and set password
+ */
 export const authControllerVerifyUserAndSetPassword = (
-  token: string,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<void>(
-    { url: `/auth/verify/${token}`, method: "PATCH" },
-    options
-  );
-};
-
+    token: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<void>(
+      {url: `/auth/verify/${token}`, method: 'PATCH'
+    },
+      options);
+    }
+  
+/**
+ * @summary Get user by verification token
+ */
 export const authControllerGetUserByToken = (
-  token: string,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<void>(
-    { url: `/auth/user/${token}`, method: "GET" },
-    options
-  );
-};
-
+    token: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<void>(
+      {url: `/auth/user/${token}`, method: 'GET'
+    },
+      options);
+    }
+  
 /**
  * @summary Find user by email
  */
 export const usersControllerFindByEmail = (
-  params: UsersControllerFindByEmailParams,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<UserSecretDto>(
-    { url: `/users/find-by-email`, method: "GET", params },
-    options
-  );
-};
-
+    email: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<UserSecretDto>(
+      {url: `/users/${email}`, method: 'GET'
+    },
+      options);
+    }
+  
 /**
  * @summary Get user details
  */
 export const usersControllerGetUserDetails = (
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<UserDto>({ url: `/users`, method: "GET" }, options);
-};
-
+    
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<UserDto>(
+      {url: `/users`, method: 'GET'
+    },
+      options);
+    }
+  
 /**
  * @summary Update user
  */
 export const usersControllerPatchUser = (
-  patchUserDto: BodyType<PatchUserDto>,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<PatchUserDto>(
-    {
-      url: `/users`,
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      data: patchUserDto,
+    patchUserDto: BodyType<PatchUserDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<UserDto>(
+      {url: `/users`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: patchUserDto
     },
-    options
-  );
-};
-
+      options);
+    }
+  
 /**
  * @summary Get user by ID
  */
 export const usersControllerGetUserById = (
-  userId: string,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<UserDto>(
-    { url: `/users/get-user-by-id/${userId}`, method: "GET" },
-    options
-  );
-};
-
+    userId: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<UserDto>(
+      {url: `/users/${userId}`, method: 'GET'
+    },
+      options);
+    }
+  
+/**
+ * @summary Delete user by ID
+ */
+export const usersControllerDeleteUser = (
+    userId: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<void>(
+      {url: `/users/${userId}`, method: 'DELETE'
+    },
+      options);
+    }
+  
 /**
  * @summary Create new user without password
  */
 export const usersControllerCreateUserWithoutPassword = (
-  userWithoutPassword: BodyType<UserWithoutPassword>,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<void>(
-    {
-      url: `/users/create-new-user-without-password`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      data: userWithoutPassword,
+    userWithoutPassword: BodyType<UserWithoutPassword>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<void>(
+      {url: `/users/without-password`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: userWithoutPassword
     },
-    options
-  );
-};
-
+      options);
+    }
+  
 /**
  * @summary Find verification token
  */
 export const usersControllerFindVerificationToken = (
-  token: string,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<VerificationTokenDto>(
-    { url: `/users/find-verification-token/${token}`, method: "GET" },
-    options
-  );
-};
-
+    token: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<VerificationTokenDto>(
+      {url: `/users/verification/${token}`, method: 'GET'
+    },
+      options);
+    }
+  
 /**
  * @summary Update user password
  */
 export const usersControllerUpdateUserPassword = (
-  userId: string,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<void>(
-    { url: `/users/update-password/${userId}`, method: "PATCH" },
-    options
-  );
-};
-
-export const usersControllerDeleteUser = (
-  userId: string,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<void>(
-    { url: `/users/${userId}`, method: "DELETE" },
-    options
-  );
-};
-
+    userId: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<void>(
+      {url: `/users/password/${userId}`, method: 'PATCH'
+    },
+      options);
+    }
+  
 /**
  * @summary Get user position
  */
 export const userPositionControllerGetUserPosition = (
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<PositionDto>(
-    { url: `/user-position`, method: "GET" },
-    options
-  );
-};
-
+    
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<PositionDto>(
+      {url: `/user-position`, method: 'GET'
+    },
+      options);
+    }
+  
+/**
+ * @summary Create a new position
+ */
 export const userPositionControllerCreate = (
-  createPositionDto: BodyType<CreatePositionDto>,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<PositionDto>(
-    {
-      url: `/user-position`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      data: createPositionDto,
+    createPositionDto: BodyType<CreatePositionDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<PositionDto>(
+      {url: `/user-position`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createPositionDto
     },
-    options
-  );
-};
-
+      options);
+    }
+  
+/**
+ * @summary Update a position by ID
+ */
 export const userPositionControllerUpdate = (
-  id: string,
-  updatePositionDto: BodyType<UpdatePositionDto>,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<PositionDto>(
-    {
-      url: `/user-position/${id}`,
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      data: updatePositionDto,
+    id: string,
+    updatePositionDto: BodyType<UpdatePositionDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<PositionDto>(
+      {url: `/user-position/${id}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updatePositionDto
     },
-    options
-  );
-};
-
+      options);
+    }
+  
+/**
+ * @summary Get position by ID
+ */
 export const userPositionControllerGetPositionByPositionId = (
-  id: string,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<PositionDto>(
-    { url: `/user-position/${id}`, method: "GET" },
-    options
-  );
-};
-
-export const userPositionControllerDelete = (
-  id: string,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<void>(
-    { url: `/user-position/${id}`, method: "DELETE" },
-    options
-  );
-};
-
-export const userPositionControllerAssignUserToPosition = (
-  assignUserToPositionDto: BodyType<AssignUserToPositionDto>,
-  options?: SecondParameter<typeof createInstance>
-) => {
-  return createInstance<void>(
-    {
-      url: `/user-position/assign`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      data: assignUserToPositionDto,
+    id: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<PositionDto>(
+      {url: `/user-position/${id}`, method: 'GET'
     },
-    options
-  );
-};
-
-export type CompanyControllerCreateCompanyResult = NonNullable<
-  Awaited<ReturnType<typeof companyControllerCreateCompany>>
->;
-export type CompanyControllerGetCompanyResult = NonNullable<
-  Awaited<ReturnType<typeof companyControllerGetCompany>>
->;
-export type CompanyControllerGetUsersOfCompanyByIdResult = NonNullable<
-  Awaited<ReturnType<typeof companyControllerGetUsersOfCompanyById>>
->;
-export type CompanyControllerGetUsersOfCompanyResult = NonNullable<
-  Awaited<ReturnType<typeof companyControllerGetUsersOfCompany>>
->;
-export type CompanyControllerPatchCompanyResult = NonNullable<
-  Awaited<ReturnType<typeof companyControllerPatchCompany>>
->;
-export type CompanyControllerAddUserToCompanyResult = NonNullable<
-  Awaited<ReturnType<typeof companyControllerAddUserToCompany>>
->;
-export type CompanyControllerGetCompanyByIdResult = NonNullable<
-  Awaited<ReturnType<typeof companyControllerGetCompanyById>>
->;
-export type CompanyControllerGetCompanyResourcesResult = NonNullable<
-  Awaited<ReturnType<typeof companyControllerGetCompanyResources>>
->;
-export type BusinessHoursControllerCreateBusinessHoursResult = NonNullable<
-  Awaited<ReturnType<typeof businessHoursControllerCreateBusinessHours>>
->;
-export type BusinessHoursControllerGetBusinessHoursResult = NonNullable<
-  Awaited<ReturnType<typeof businessHoursControllerGetBusinessHours>>
->;
-export type BusinessHoursControllerPatchBusinessHoursResult = NonNullable<
-  Awaited<ReturnType<typeof businessHoursControllerPatchBusinessHours>>
->;
-export type BusinessHoursControllerGetBusinessHoursByUserIdResult = NonNullable<
-  Awaited<ReturnType<typeof businessHoursControllerGetBusinessHoursByUserId>>
->;
-export type BusinessHoursControllerPatchBusinessHoursByIdResult = NonNullable<
-  Awaited<ReturnType<typeof businessHoursControllerPatchBusinessHoursById>>
->;
-export type PermissionsControllerCreateResult = NonNullable<
-  Awaited<ReturnType<typeof permissionsControllerCreate>>
->;
-export type PermissionsControllerGetPermissionResult = NonNullable<
-  Awaited<ReturnType<typeof permissionsControllerGetPermission>>
->;
-export type PermissionsControllerUpdateResult = NonNullable<
-  Awaited<ReturnType<typeof permissionsControllerUpdate>>
->;
-export type PermissionsControllerDeleteResult = NonNullable<
-  Awaited<ReturnType<typeof permissionsControllerDelete>>
->;
-export type PaymentTypeControllerCreateResult = NonNullable<
-  Awaited<ReturnType<typeof paymentTypeControllerCreate>>
->;
-export type PaymentTypeControllerUpdateResult = NonNullable<
-  Awaited<ReturnType<typeof paymentTypeControllerUpdate>>
->;
-export type PaymentTypeControllerFindByUserIdResult = NonNullable<
-  Awaited<ReturnType<typeof paymentTypeControllerFindByUserId>>
->;
-export type PaymentTypeControllerDeleteResult = NonNullable<
-  Awaited<ReturnType<typeof paymentTypeControllerDelete>>
->;
-export type UserNotificationSettingsControllerCreateUserNotificationSettingsResult =
-  NonNullable<
-    Awaited<
-      ReturnType<
-        typeof userNotificationSettingsControllerCreateUserNotificationSettings
-      >
-    >
-  >;
-export type UserNotificationSettingsControllerGetUserNotificationSettingsResult =
-  NonNullable<
-    Awaited<
-      ReturnType<
-        typeof userNotificationSettingsControllerGetUserNotificationSettings
-      >
-    >
-  >;
-export type UserNotificationSettingsControllerUpdateUserNotificationSettingsResult =
-  NonNullable<
-    Awaited<
-      ReturnType<
-        typeof userNotificationSettingsControllerUpdateUserNotificationSettings
-      >
-    >
-  >;
-export type UserNotificationSettingsControllerGetUserNotificationSettingsByUserIdResult =
-  NonNullable<
-    Awaited<
-      ReturnType<
-        typeof userNotificationSettingsControllerGetUserNotificationSettingsByUserId
-      >
-    >
-  >;
-export type UserNotificationSettingsControllerUpdateUserNotificationSettingsByUserIdResult =
-  NonNullable<
-    Awaited<
-      ReturnType<
-        typeof userNotificationSettingsControllerUpdateUserNotificationSettingsByUserId
-      >
-    >
-  >;
-export type ResourcesControllerCreateResourceResult = NonNullable<
-  Awaited<ReturnType<typeof resourcesControllerCreateResource>>
->;
-export type ResourcesControllerFindAllCompanyResourcesResult = NonNullable<
-  Awaited<ReturnType<typeof resourcesControllerFindAllCompanyResources>>
->;
-export type ResourcesControllerFindOneResourceResult = NonNullable<
-  Awaited<ReturnType<typeof resourcesControllerFindOneResource>>
->;
-export type ResourcesControllerUpdateResourceResult = NonNullable<
-  Awaited<ReturnType<typeof resourcesControllerUpdateResource>>
->;
-export type ResourcesControllerRemoveResourceResult = NonNullable<
-  Awaited<ReturnType<typeof resourcesControllerRemoveResource>>
->;
-export type ResourcesControllerCreateDefaultResourcesForCompanyResult =
-  NonNullable<
-    Awaited<
-      ReturnType<typeof resourcesControllerCreateDefaultResourcesForCompany>
-    >
-  >;
-export type AuthControllerSignUpResult = NonNullable<
-  Awaited<ReturnType<typeof authControllerSignUp>>
->;
-export type AuthControllerSignInResult = NonNullable<
-  Awaited<ReturnType<typeof authControllerSignIn>>
->;
-export type AuthControllerSignOutResult = NonNullable<
-  Awaited<ReturnType<typeof authControllerSignOut>>
->;
-export type AuthControllerGetSessionInfoResult = NonNullable<
-  Awaited<ReturnType<typeof authControllerGetSessionInfo>>
->;
-export type AuthControllerVerifyUserAndSetPasswordResult = NonNullable<
-  Awaited<ReturnType<typeof authControllerVerifyUserAndSetPassword>>
->;
-export type AuthControllerGetUserByTokenResult = NonNullable<
-  Awaited<ReturnType<typeof authControllerGetUserByToken>>
->;
-export type UsersControllerFindByEmailResult = NonNullable<
-  Awaited<ReturnType<typeof usersControllerFindByEmail>>
->;
-export type UsersControllerGetUserDetailsResult = NonNullable<
-  Awaited<ReturnType<typeof usersControllerGetUserDetails>>
->;
-export type UsersControllerPatchUserResult = NonNullable<
-  Awaited<ReturnType<typeof usersControllerPatchUser>>
->;
-export type UsersControllerGetUserByIdResult = NonNullable<
-  Awaited<ReturnType<typeof usersControllerGetUserById>>
->;
-export type UsersControllerCreateUserWithoutPasswordResult = NonNullable<
-  Awaited<ReturnType<typeof usersControllerCreateUserWithoutPassword>>
->;
-export type UsersControllerFindVerificationTokenResult = NonNullable<
-  Awaited<ReturnType<typeof usersControllerFindVerificationToken>>
->;
-export type UsersControllerUpdateUserPasswordResult = NonNullable<
-  Awaited<ReturnType<typeof usersControllerUpdateUserPassword>>
->;
-export type UsersControllerDeleteUserResult = NonNullable<
-  Awaited<ReturnType<typeof usersControllerDeleteUser>>
->;
-export type UserPositionControllerGetUserPositionResult = NonNullable<
-  Awaited<ReturnType<typeof userPositionControllerGetUserPosition>>
->;
-export type UserPositionControllerCreateResult = NonNullable<
-  Awaited<ReturnType<typeof userPositionControllerCreate>>
->;
-export type UserPositionControllerUpdateResult = NonNullable<
-  Awaited<ReturnType<typeof userPositionControllerUpdate>>
->;
-export type UserPositionControllerGetPositionByPositionIdResult = NonNullable<
-  Awaited<ReturnType<typeof userPositionControllerGetPositionByPositionId>>
->;
-export type UserPositionControllerDeleteResult = NonNullable<
-  Awaited<ReturnType<typeof userPositionControllerDelete>>
->;
-export type UserPositionControllerAssignUserToPositionResult = NonNullable<
-  Awaited<ReturnType<typeof userPositionControllerAssignUserToPosition>>
->;
+      options);
+    }
+  
+/**
+ * @summary Delete a position by ID
+ */
+export const userPositionControllerDelete = (
+    id: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<void>(
+      {url: `/user-position/${id}`, method: 'DELETE'
+    },
+      options);
+    }
+  
+/**
+ * @summary Assign a user to a position
+ */
+export const userPositionControllerAssignUserToPosition = (
+    assignUserToPositionDto: BodyType<AssignUserToPositionDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<void>(
+      {url: `/user-position/assign`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: assignUserToPositionDto
+    },
+      options);
+    }
+  
+/**
+ * @summary Create a new order company
+ */
+export const orderCompaniesControllerCreateOrderCompany = (
+    createOrderCompaniesDto: BodyType<CreateOrderCompaniesDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<OrderCompaniesDto>(
+      {url: `/order-companies`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createOrderCompaniesDto
+    },
+      options);
+    }
+  
+/**
+ * @summary Get all companies for an order
+ */
+export const orderCompaniesControllerFindOrderCompanies = (
+    params: OrderCompaniesControllerFindOrderCompaniesParams,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<OrderCompaniesDto[]>(
+      {url: `/order-companies`, method: 'GET',
+        params
+    },
+      options);
+    }
+  
+/**
+ * @summary Get an order company by ID
+ */
+export const orderCompaniesControllerFindOneOrderCompany = (
+    id: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<OrderCompaniesDto>(
+      {url: `/order-companies/${id}`, method: 'GET'
+    },
+      options);
+    }
+  
+/**
+ * @summary Update an order company by ID
+ */
+export const orderCompaniesControllerUpdateOrderCompany = (
+    id: string,
+    updateOrderCompaniesDto: BodyType<UpdateOrderCompaniesDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<OrderCompaniesDto>(
+      {url: `/order-companies/${id}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updateOrderCompaniesDto
+    },
+      options);
+    }
+  
+/**
+ * @summary Delete an order company by ID
+ */
+export const orderCompaniesControllerRemoveOrderCompany = (
+    id: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<void>(
+      {url: `/order-companies/${id}`, method: 'DELETE'
+    },
+      options);
+    }
+  
+/**
+ * @summary Create a new order resource
+ */
+export const orderResourcesControllerCreateOrderResource = (
+    createOrderResourcesDto: BodyType<CreateOrderResourcesDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<OrderResourcesDto>(
+      {url: `/order-resources`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createOrderResourcesDto
+    },
+      options);
+    }
+  
+/**
+ * @summary Get all resources for an order
+ */
+export const orderResourcesControllerFindOrderResources = (
+    params: OrderResourcesControllerFindOrderResourcesParams,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<OrderResourcesDto[]>(
+      {url: `/order-resources`, method: 'GET',
+        params
+    },
+      options);
+    }
+  
+/**
+ * @summary Get an order resource by ID
+ */
+export const orderResourcesControllerFindOneOrderResource = (
+    id: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<OrderResourcesDto>(
+      {url: `/order-resources/${id}`, method: 'GET'
+    },
+      options);
+    }
+  
+/**
+ * @summary Update an order resource by ID
+ */
+export const orderResourcesControllerUpdateOrderResource = (
+    id: string,
+    updateOrderResourcesDto: BodyType<UpdateOrderResourcesDto>,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<OrderResourcesDto>(
+      {url: `/order-resources/${id}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updateOrderResourcesDto
+    },
+      options);
+    }
+  
+/**
+ * @summary Delete an order resource by ID
+ */
+export const orderResourcesControllerRemoveOrderResource = (
+    id: string,
+ options?: SecondParameter<typeof createInstance>,) => {
+      return createInstance<void>(
+      {url: `/order-resources/${id}`, method: 'DELETE'
+    },
+      options);
+    }
+  
+export type CompanyControllerGetCompanyResult = NonNullable<Awaited<ReturnType<typeof companyControllerGetCompany>>>
+export type CompanyControllerCreateCompanyResult = NonNullable<Awaited<ReturnType<typeof companyControllerCreateCompany>>>
+export type CompanyControllerPatchCompanyResult = NonNullable<Awaited<ReturnType<typeof companyControllerPatchCompany>>>
+export type CompanyControllerGetUsersOfCompanyByIdResult = NonNullable<Awaited<ReturnType<typeof companyControllerGetUsersOfCompanyById>>>
+export type CompanyControllerGetUsersOfCompanyResult = NonNullable<Awaited<ReturnType<typeof companyControllerGetUsersOfCompany>>>
+export type CompanyControllerAddUserToCompanyResult = NonNullable<Awaited<ReturnType<typeof companyControllerAddUserToCompany>>>
+export type CompanyControllerGetCompanyByIdResult = NonNullable<Awaited<ReturnType<typeof companyControllerGetCompanyById>>>
+export type CompanyControllerGetCompanyResourcesResult = NonNullable<Awaited<ReturnType<typeof companyControllerGetCompanyResources>>>
+export type CompanyControllerGetCompanyOrdersResult = NonNullable<Awaited<ReturnType<typeof companyControllerGetCompanyOrders>>>
+export type BusinessHoursControllerCreateBusinessHoursResult = NonNullable<Awaited<ReturnType<typeof businessHoursControllerCreateBusinessHours>>>
+export type BusinessHoursControllerGetBusinessHoursResult = NonNullable<Awaited<ReturnType<typeof businessHoursControllerGetBusinessHours>>>
+export type BusinessHoursControllerPatchBusinessHoursResult = NonNullable<Awaited<ReturnType<typeof businessHoursControllerPatchBusinessHours>>>
+export type BusinessHoursControllerGetBusinessHoursByUserIdResult = NonNullable<Awaited<ReturnType<typeof businessHoursControllerGetBusinessHoursByUserId>>>
+export type BusinessHoursControllerPatchBusinessHoursByIdResult = NonNullable<Awaited<ReturnType<typeof businessHoursControllerPatchBusinessHoursById>>>
+export type PermissionsControllerCreateResult = NonNullable<Awaited<ReturnType<typeof permissionsControllerCreate>>>
+export type PermissionsControllerGetPermissionResult = NonNullable<Awaited<ReturnType<typeof permissionsControllerGetPermission>>>
+export type PermissionsControllerUpdateResult = NonNullable<Awaited<ReturnType<typeof permissionsControllerUpdate>>>
+export type PermissionsControllerDeleteResult = NonNullable<Awaited<ReturnType<typeof permissionsControllerDelete>>>
+export type PaymentTypeControllerCreateResult = NonNullable<Awaited<ReturnType<typeof paymentTypeControllerCreate>>>
+export type PaymentTypeControllerUpdateResult = NonNullable<Awaited<ReturnType<typeof paymentTypeControllerUpdate>>>
+export type PaymentTypeControllerFindByUserIdResult = NonNullable<Awaited<ReturnType<typeof paymentTypeControllerFindByUserId>>>
+export type PaymentTypeControllerDeleteResult = NonNullable<Awaited<ReturnType<typeof paymentTypeControllerDelete>>>
+export type UserNotificationSettingsControllerCreateUserNotificationSettingsResult = NonNullable<Awaited<ReturnType<typeof userNotificationSettingsControllerCreateUserNotificationSettings>>>
+export type UserNotificationSettingsControllerGetUserNotificationSettingsResult = NonNullable<Awaited<ReturnType<typeof userNotificationSettingsControllerGetUserNotificationSettings>>>
+export type UserNotificationSettingsControllerUpdateUserNotificationSettingsResult = NonNullable<Awaited<ReturnType<typeof userNotificationSettingsControllerUpdateUserNotificationSettings>>>
+export type UserNotificationSettingsControllerGetUserNotificationSettingsByUserIdResult = NonNullable<Awaited<ReturnType<typeof userNotificationSettingsControllerGetUserNotificationSettingsByUserId>>>
+export type UserNotificationSettingsControllerUpdateUserNotificationSettingsByUserIdResult = NonNullable<Awaited<ReturnType<typeof userNotificationSettingsControllerUpdateUserNotificationSettingsByUserId>>>
+export type ResourcesControllerCreateResourceResult = NonNullable<Awaited<ReturnType<typeof resourcesControllerCreateResource>>>
+export type ResourcesControllerFindAllCompanyResourcesResult = NonNullable<Awaited<ReturnType<typeof resourcesControllerFindAllCompanyResources>>>
+export type ResourcesControllerFindOneResourceResult = NonNullable<Awaited<ReturnType<typeof resourcesControllerFindOneResource>>>
+export type ResourcesControllerUpdateResourceResult = NonNullable<Awaited<ReturnType<typeof resourcesControllerUpdateResource>>>
+export type ResourcesControllerRemoveResourceResult = NonNullable<Awaited<ReturnType<typeof resourcesControllerRemoveResource>>>
+export type ResourcesControllerCreateDefaultResourcesForCompanyResult = NonNullable<Awaited<ReturnType<typeof resourcesControllerCreateDefaultResourcesForCompany>>>
+export type OrderControllerCreateOrderResult = NonNullable<Awaited<ReturnType<typeof orderControllerCreateOrder>>>
+export type OrderControllerFindOneOrderResult = NonNullable<Awaited<ReturnType<typeof orderControllerFindOneOrder>>>
+export type OrderControllerUpdateOrderResult = NonNullable<Awaited<ReturnType<typeof orderControllerUpdateOrder>>>
+export type OrderControllerRemoveOrderResult = NonNullable<Awaited<ReturnType<typeof orderControllerRemoveOrder>>>
+export type OrderControllerFindAllCompanyOrdersResult = NonNullable<Awaited<ReturnType<typeof orderControllerFindAllCompanyOrders>>>
+export type AuthControllerSignUpResult = NonNullable<Awaited<ReturnType<typeof authControllerSignUp>>>
+export type AuthControllerSignInResult = NonNullable<Awaited<ReturnType<typeof authControllerSignIn>>>
+export type AuthControllerSignOutResult = NonNullable<Awaited<ReturnType<typeof authControllerSignOut>>>
+export type AuthControllerGetSessionInfoResult = NonNullable<Awaited<ReturnType<typeof authControllerGetSessionInfo>>>
+export type AuthControllerVerifyUserAndSetPasswordResult = NonNullable<Awaited<ReturnType<typeof authControllerVerifyUserAndSetPassword>>>
+export type AuthControllerGetUserByTokenResult = NonNullable<Awaited<ReturnType<typeof authControllerGetUserByToken>>>
+export type UsersControllerFindByEmailResult = NonNullable<Awaited<ReturnType<typeof usersControllerFindByEmail>>>
+export type UsersControllerGetUserDetailsResult = NonNullable<Awaited<ReturnType<typeof usersControllerGetUserDetails>>>
+export type UsersControllerPatchUserResult = NonNullable<Awaited<ReturnType<typeof usersControllerPatchUser>>>
+export type UsersControllerGetUserByIdResult = NonNullable<Awaited<ReturnType<typeof usersControllerGetUserById>>>
+export type UsersControllerDeleteUserResult = NonNullable<Awaited<ReturnType<typeof usersControllerDeleteUser>>>
+export type UsersControllerCreateUserWithoutPasswordResult = NonNullable<Awaited<ReturnType<typeof usersControllerCreateUserWithoutPassword>>>
+export type UsersControllerFindVerificationTokenResult = NonNullable<Awaited<ReturnType<typeof usersControllerFindVerificationToken>>>
+export type UsersControllerUpdateUserPasswordResult = NonNullable<Awaited<ReturnType<typeof usersControllerUpdateUserPassword>>>
+export type UserPositionControllerGetUserPositionResult = NonNullable<Awaited<ReturnType<typeof userPositionControllerGetUserPosition>>>
+export type UserPositionControllerCreateResult = NonNullable<Awaited<ReturnType<typeof userPositionControllerCreate>>>
+export type UserPositionControllerUpdateResult = NonNullable<Awaited<ReturnType<typeof userPositionControllerUpdate>>>
+export type UserPositionControllerGetPositionByPositionIdResult = NonNullable<Awaited<ReturnType<typeof userPositionControllerGetPositionByPositionId>>>
+export type UserPositionControllerDeleteResult = NonNullable<Awaited<ReturnType<typeof userPositionControllerDelete>>>
+export type UserPositionControllerAssignUserToPositionResult = NonNullable<Awaited<ReturnType<typeof userPositionControllerAssignUserToPosition>>>
+export type OrderCompaniesControllerCreateOrderCompanyResult = NonNullable<Awaited<ReturnType<typeof orderCompaniesControllerCreateOrderCompany>>>
+export type OrderCompaniesControllerFindOrderCompaniesResult = NonNullable<Awaited<ReturnType<typeof orderCompaniesControllerFindOrderCompanies>>>
+export type OrderCompaniesControllerFindOneOrderCompanyResult = NonNullable<Awaited<ReturnType<typeof orderCompaniesControllerFindOneOrderCompany>>>
+export type OrderCompaniesControllerUpdateOrderCompanyResult = NonNullable<Awaited<ReturnType<typeof orderCompaniesControllerUpdateOrderCompany>>>
+export type OrderCompaniesControllerRemoveOrderCompanyResult = NonNullable<Awaited<ReturnType<typeof orderCompaniesControllerRemoveOrderCompany>>>
+export type OrderResourcesControllerCreateOrderResourceResult = NonNullable<Awaited<ReturnType<typeof orderResourcesControllerCreateOrderResource>>>
+export type OrderResourcesControllerFindOrderResourcesResult = NonNullable<Awaited<ReturnType<typeof orderResourcesControllerFindOrderResources>>>
+export type OrderResourcesControllerFindOneOrderResourceResult = NonNullable<Awaited<ReturnType<typeof orderResourcesControllerFindOneOrderResource>>>
+export type OrderResourcesControllerUpdateOrderResourceResult = NonNullable<Awaited<ReturnType<typeof orderResourcesControllerUpdateOrderResource>>>
+export type OrderResourcesControllerRemoveOrderResourceResult = NonNullable<Awaited<ReturnType<typeof orderResourcesControllerRemoveOrderResource>>>
